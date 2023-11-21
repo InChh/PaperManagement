@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <Import Project="..\..\common.props" />
+
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <RootNamespace>csuwf.PaperManagement</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Wf.PaperManagement.Domain\Wf.PaperManagement.Domain.csproj" />
+    <ProjectReference Include="..\Wf.PaperManagement.Application.Contracts\Wf.PaperManagement.Application.Contracts.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Volo.Abp.Ddd.Application" Version="7.4.1" />
+  </ItemGroup>
+  
+
+</Project>

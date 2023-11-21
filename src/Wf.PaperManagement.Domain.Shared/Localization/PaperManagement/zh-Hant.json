@@ -1,0 +1,6 @@
+{
+    "culture": "zh-Hant",
+    "texts": {
+      "Pm.Error:CompleteTimeShouldLaterThanReceiveTime": "还单时间应晚于拿单时间"
+    }
+  }

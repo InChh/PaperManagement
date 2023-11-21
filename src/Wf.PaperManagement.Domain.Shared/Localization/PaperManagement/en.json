@@ -1,0 +1,6 @@
+{
+  "culture": "en",
+  "texts": {
+    "Pm.Error:CompleteTimeShouldLaterThanReceiveTime": "Complete time should later than receive time"
+  }
+}

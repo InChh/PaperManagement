@@ -1,0 +1,31 @@
+{
+  "iisSettings": {
+    "windowsAuthentication": false,
+    "anonymousAuthentication": true,
+    "iisExpress": {
+      "applicationUrl": "https://localhost:44344",
+      "sslPort": 44344
+    }
+  },
+  "profiles": {
+    "IIS Express": {
+      "commandName": "IISExpress",
+      "launchBrowser": true,
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      }
+    },
+    "Wf.PaperManagement.HttpApi.Host": {
+      "commandName": "Project",
+      "launchBrowser": true,
+      "applicationUrl": "https://localhost:44344",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Development",
+        "COMPLUS_ZapDisable": "1",
+        "COMPLUS_JitMinOpts": "1",
+        "COMPlus_TieredCompilation": "0",
+        "COMPLUS_ReadyToRun": "0"
+      }
+    }
+  }
+}
