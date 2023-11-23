@@ -93,12 +93,12 @@ public class WorkerAppService : PaperManagementAppService, IWorkerAppService
         return ObjectMapper.Map<Worker, WorkerDto>(worker);
     }
 
-    public async Task OnDuty(Guid userId)
+    public async Task OnDutyAsync(Guid userId)
     {
         await _workerManager.OnDuty(userId);
     }
 
-    public async Task OffDuty(Guid userId)
+    public async Task OffDutyAsync(Guid userId)
     {
         await _workerManager.OffDuty(userId);
     }

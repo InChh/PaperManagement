@@ -19,7 +19,7 @@ public class StatisticAppService : PaperManagementAppService, IStatisticAppServi
         _paperRepository = paperRepository;
     }
 
-    public async Task<int> GetTodayResolveCount()
+    public async Task<int> GetTodayResolveCountAsync()
     {
         var queryable = await _paperRepository.GetQueryableAsync();
         queryable = queryable.Where(p => p.CreationTime.Date == DateTime.Now.Date && p.Status == PaperStatus.Processed);

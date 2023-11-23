@@ -11,7 +11,7 @@ public interface IStatisticAppService : IApplicationService
     /// 获取今日已处理的服务单数量
     /// </summary>
     /// <returns></returns>
-    Task<int> GetTodayResolveCount();
+    Task<int> GetTodayResolveCountAsync();
 
     /// <summary>
     /// 获取队员在指定时间范围内的出单数量

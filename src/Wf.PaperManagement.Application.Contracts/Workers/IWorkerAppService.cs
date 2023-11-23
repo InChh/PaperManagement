@@ -52,12 +52,12 @@ public interface IWorkerAppService : IApplicationService
     /// </summary>
     /// <param name="userId">用户id</param>
     /// <returns></returns>
-    Task OnDuty(Guid userId);
+    Task OnDutyAsync(Guid userId);
 
     /// <summary>
     /// 设置队员不再值班，不可以进行登单，只能查看
     /// </summary>
     /// <param name="userId"></param>
     /// <returns></returns>
-    Task OffDuty(Guid userId);
+    Task OffDutyAsync(Guid userId);
 }
