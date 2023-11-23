@@ -33,6 +33,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "csuwf.PaperManagement.Domai
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Wf.PaperManagement.DbMigrator", "src\Wf.PaperManagement.DbMigrator\Wf.PaperManagement.DbMigrator.csproj", "{AA94D832-1CCC-4715-95A9-A483F23A1A5D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Wf.PaperManagement.Blazor", "src\Wf.PaperManagement.Blazor\Wf.PaperManagement.Blazor.csproj", "{8E73DA62-A28F-4801-A3DA-9B4000AAA461}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -91,6 +93,10 @@ Global
 		{AA94D832-1CCC-4715-95A9-A483F23A1A5D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AA94D832-1CCC-4715-95A9-A483F23A1A5D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AA94D832-1CCC-4715-95A9-A483F23A1A5D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8E73DA62-A28F-4801-A3DA-9B4000AAA461}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8E73DA62-A28F-4801-A3DA-9B4000AAA461}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8E73DA62-A28F-4801-A3DA-9B4000AAA461}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8E73DA62-A28F-4801-A3DA-9B4000AAA461}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -109,6 +115,7 @@ Global
 		{91853F21-9CD9-4132-BC29-A7D5D84FFFE7} = {04DBDB01-70F4-4E06-B468-8F87850B22BE}
 		{E512F4D9-9375-480F-A2F6-A46509F9D824} = {04DBDB01-70F4-4E06-B468-8F87850B22BE}
 		{AA94D832-1CCC-4715-95A9-A483F23A1A5D} = {CA9AC87F-097E-4F15-8393-4BC07735A5B0}
+		{8E73DA62-A28F-4801-A3DA-9B4000AAA461} = {CA9AC87F-097E-4F15-8393-4BC07735A5B0}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {28315BFD-90E7-4E14-A2EA-F3D23AF4126F}
