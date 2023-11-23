@@ -1,0 +1,60 @@
+<Project Sdk="Microsoft.NET.Sdk.BlazorWebAssembly">
+
+  <Import Project="..\..\common.props" />
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <BlazorWebAssemblyLoadAllGlobalizationData>true</BlazorWebAssemblyLoadAllGlobalizationData>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Masa.Blazor" Version="1.2.2" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="8.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="8.0.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Volo.Abp.Autofac.WebAssembly" Version="7.4.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\Wf.PaperManagement.HttpApi.Client\Wf.PaperManagement.HttpApi.Client.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <AdditionalFiles Include="Pages\Dashboard\Dashboard.razor" />
+    <AdditionalFiles Include="Pages\Paper\Add.razor" />
+    <AdditionalFiles Include="Pages\Paper\Edit.razor" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Pages\User\" />
+    <Folder Include="Pages\Worker\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Update="wwwroot\i18n\en-US.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Update="wwwroot\i18n\supportedCultures.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Update="wwwroot\i18n\zh-CN.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Update="wwwroot\nav\nav.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <_ContentIncludedByDefault Remove="wwwroot\img\eCommerce\rectangle.png" />
+    <_ContentIncludedByDefault Remove="wwwroot\img\eCommerce\trophy.png" />
+    <_ContentIncludedByDefault Remove="wwwroot\img\analytics\json.png" />
+    <_ContentIncludedByDefault Remove="wwwroot\img\analytics\left.png" />
+    <_ContentIncludedByDefault Remove="wwwroot\img\analytics\right.png" />
+  </ItemGroup>
+
+
+</Project>

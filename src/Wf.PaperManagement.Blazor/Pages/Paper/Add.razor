@@ -1,0 +1,13 @@
+@page "/app/paper/add"
+
+<MRow>
+    <MForm></MForm>
+</MRow>
+
+@code {
+
+    [Parameter]
+    public Guid? Id { get; set; }
+
+    public bool IsEdit => Id.HasValue;
+}

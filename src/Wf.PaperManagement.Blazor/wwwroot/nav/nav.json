@@ -1,0 +1,60 @@
+[
+  {
+    "Id": 1,
+    "Title": "Dashboard",
+    "Icon": "mdi-trending-up",
+    "Href": "dashboard",
+    "Target": "Self"
+  },
+  {
+    "Id": 2,
+    "Title": "Paper",
+    "Icon": "mdi-calendar-check-outline",
+    "Children": [
+      {
+        "Id": 3,
+        "Title": "List",
+        "Icon": "mdi-circle",
+        "Href": "app/paper/list"
+      },
+      {
+        "Id": 4,
+        "Title": "Edit",
+        "Icon": "mdi-circle",
+        "Href": "app/paper/edit"
+      },
+      {
+        "Id": 5,
+        "Title": "Detail",
+        "Icon": "mdi-circle",
+        "Href": "app/paper/detail"
+      }
+    ]
+  },
+  {
+    "Id": 6,
+    "Title": "Worker",
+    "Icon": "mdi-account-outline",
+    "Children": [
+      {
+        "Id": 7,
+        "Title": "List",
+        "Icon": "mdi-circle",
+        "Href": "app/worker/list"
+      }
+    ]
+  },
+  {
+    "Id": 8,
+    "Title": "User",
+    "Icon": "mdi-account-outline",
+    "Children": [
+      {
+        "Id": 9,
+        "Title": "List",
+        "Icon": "mdi-circle",
+        "Href": "app/user/list"
+      }
+    ]
+  }
+]

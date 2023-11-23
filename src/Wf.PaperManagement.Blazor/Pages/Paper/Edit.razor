@@ -1,0 +1,11 @@
+@page "/app/paper/edit/{id:Guid}"
+@page "/app/paper/edit"
+
+<Add Id="@Id"></Add>
+
+@code {
+    
+    [Parameter]
+    public Guid? Id { get; set; }
+    
+}
