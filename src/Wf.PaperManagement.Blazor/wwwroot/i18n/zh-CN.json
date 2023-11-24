@@ -40,5 +40,12 @@
   "View of {0}": "{0} 的视图",
   "Edit of {0}": "编辑 {0}",
   "Details of {0}": "{0} 的详情",
-  "Back to Home" : "返回首页"
+  "Back to Home" : "返回首页",
+  "Logout" : "退出登录",
+  "Paper": "服务单",
+  "Worker": "网服队员",
+  "Not Found": "您访问的页面不存在",
+  "CompletingLoggingIn": "正在登录...",
+  "CompletingLoggingOut": "正在退出登录...",
+  "LogInSucceeded": "登录成功"
 }

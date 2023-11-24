@@ -27,6 +27,7 @@
         "Id": 5,
         "Title": "Detail",
         "Icon": "mdi-circle",
+        "Hide": true,
         "Href": "app/paper/detail"
       }
     ]

@@ -2,6 +2,7 @@
 using System.Net.Http;
 using System.Threading.Tasks;
 using csuwf.PaperManagement;
+using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -24,6 +25,8 @@ public class PaperManagementBlazorModule : AbpModule
         var builder = context.Services.GetSingletonInstance<WebAssemblyHostBuilder>();
 
         ConfigureAuthentication(builder);
+        builder.Services.AddOptions();
+        builder.Services.AddAuthorizationCore();
         ConfigureHttpClient(context, environment);
         await ConfigureMasa(builder);
         ConfigureUI(builder);
@@ -52,12 +55,14 @@ public class PaperManagementBlazorModule : AbpModule
             options.UserOptions.RoleClaim = AbpClaimTypes.Role;
 
             options.ProviderOptions.DefaultScopes.Add("offline_access");
+            options.ProviderOptions.DefaultScopes.Remove("profile");
         });
     }
 
     private static void ConfigureUI(WebAssemblyHostBuilder builder)
     {
         builder.RootComponents.Add<App>("#ApplicationContainer");
+        builder.RootComponents.Add<HeadOutlet>("head::after");
     }
 
     private static void ConfigureHttpClient(ServiceConfigurationContext context,

@@ -35,5 +35,13 @@
   "Rounded": "Rounded",
   "Breadcrumb": "Breadcrumb",
   "PageTab": "PageTab",
-  "Mode": "Mode"
+  "Mode": "Mode",
+  "Back to Home" : "Back to Home",
+  "Logout" : "Logout",
+  "Paper": "Paper",
+  "Worker": "Worker",
+  "Not Found": "The requested URL was not found.",
+  "CompletingLoggingIn": "Logging in...",
+  "CompletingLoggingOut": "Logging out...",
+  "LogInSucceeded": "Logged in successfully."
 }

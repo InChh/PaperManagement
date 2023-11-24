@@ -1,9 +1,49 @@
 @page "/authentication/{action}"
 @using Microsoft.AspNetCore.Components.WebAssembly.Authentication
+@inherits ProComponentBase
+@attribute [AllowAnonymous]
 
-<RemoteAuthenticatorView Action="@Action" />
+<RemoteAuthenticatorView Action="@Action" OnLogInSucceeded="OnLogInSucceeded">
+    <LoggingIn>
+        <MRow Class="d-flex flex-column justify-center" Style="height:calc(100vh - 132px);">
+            <MContainer Class="d-flex flex-column justify-space-between align-center">
+                <MRow NoGutters Class="mt-12 text-h3 neutral-lighten-2--text">@T("CompletingLoggingIn")</MRow>
+            </MContainer>
+        </MRow>
+    </LoggingIn>
+    <CompletingLoggingIn>
+        <MRow Class="d-flex flex-column justify-center" Style="height:calc(100vh - 132px);">
+            <MContainer Class="d-flex flex-column justify-space-between align-center">
+                <MRow NoGutters Class="mt-12 text-h3 neutral-lighten-2--text">@T("CompletingLoggingIn")</MRow>
+            </MContainer>
+        </MRow>
+    </CompletingLoggingIn>
+    <LogOut>
+        <MRow Class="d-flex flex-column justify-center" Style="height:calc(100vh - 132px);">
+            <MContainer Class="d-flex flex-column justify-space-between align-center">
+                <MRow NoGutters Class="mt-12 text-h3 neutral-lighten-2--text">@T("CompletingLoggingOut")</MRow>
+            </MContainer>
+        </MRow>
+    </LogOut>
+    <CompletingLogOut>
+        <MRow Class="d-flex flex-column justify-center" Style="height:calc(100vh - 132px);">
+            <MContainer Class="d-flex flex-column justify-space-between align-center">
+                <MRow NoGutters Class="mt-12 text-h3 neutral-lighten-2--text">@T("CompletingLoggingOut")</MRow>
+            </MContainer>
+        </MRow>
+    </CompletingLogOut>
+</RemoteAuthenticatorView>
 
 @code {
+    [Inject]
+    private IPopupService PopupService { get; set; } = default!;
+
     [Parameter]
     public string? Action { get; set; }
+
+    private void OnLogInSucceeded()
+    {
+        PopupService.EnqueueSnackbarAsync(T("LogInSucceeded"),AlertTypes.Success);
+    }
+
 }

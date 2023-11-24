@@ -1,6 +1,9 @@
 @page "/app/paper/add"
 
 <MRow>
+    <MCardText>
+        <h1>add paper is edit: @IsEdit</h1>
+    </MCardText>
     <MForm></MForm>
 </MRow>
 
@@ -9,5 +12,5 @@
     [Parameter]
     public Guid? Id { get; set; }
 
-    public bool IsEdit => Id.HasValue;
+    private bool IsEdit => Id.HasValue;
 }
