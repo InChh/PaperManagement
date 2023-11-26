@@ -1,10 +1,29 @@
 @page "/app/paper/add"
+@inherits ProComponentBase
+@using Wf.PaperManagement.Papers
+@using Mapster
+@using Microsoft.Extensions.Logging
+@using Volo.Abp.ObjectMapping
+@attribute [Authorize(Roles = "worker")]
 
 <MRow>
     <MCardText>
         <h1>add paper is edit: @IsEdit</h1>
+        @Id
     </MCardText>
-    <MForm></MForm>
+    <MForm @ref="_form" Model="FormData" EnableI18n EnableValidation>
+        <MRow>
+            <MCol Cols="12">
+                <MTextField @bind-Value="FormData.Name" Label="@T("Paper.Name")"></MTextField>
+            </MCol>
+            <MCol Cols="12">
+                <MTextField @bind-Value="FormData.PhoneNumber"></MTextField>
+            </MCol>
+        </MRow>
+        <MRow>
+            <MButton Loading="IsLoading" OnClick="() => Submit(context)"></MButton>
+        </MRow>
+    </MForm>
 </MRow>
 
 @code {
@@ -12,5 +31,45 @@
     [Parameter]
     public Guid? Id { get; set; }
 
-    private bool IsEdit => Id.HasValue;
+    [Inject]
+    private IPaperAppService PaperAppService { get; set; } = null!;
+
+    [Inject]
+    private IPopupService PopupService { get; set; } = null!;
+
+
+    private bool IsEdit => Id != null;
+
+    private bool IsLoading { get; set; } = false;
+
+    private MForm _form = null!;
+
+    private CreateUpdatePaperDto FormData { get; set; } = new();
+
+    protected override async Task OnParametersSetAsync()
+    {
+        if (IsEdit)
+        {
+            FormData = (await PaperAppService.GetAsync(Id!.Value)).Adapt<CreateUpdatePaperDto>();
+        }
+    }
+
+    private async Task Submit(FormContext context)
+    {
+        if (!context.Validate()) return;
+
+        IsLoading = true;
+        if (IsEdit)
+        {
+            await PaperAppService.UpdateAsync(Id!.Value, FormData);
+        }
+        else
+        {
+            await PaperAppService.CreateAsync(FormData);
+        }
+        IsLoading = false;
+
+        await PopupService.EnqueueSnackbarAsync(IsEdit ? T("Paper.EditSuccess") : T("Paper.AddSuccess"), AlertTypes.Success);
+    }
+
 }

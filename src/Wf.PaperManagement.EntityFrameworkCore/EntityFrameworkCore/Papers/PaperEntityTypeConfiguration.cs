@@ -1,9 +1,9 @@
-using csuwf.PaperManagement.Papers;
+using Wf.PaperManagement.Papers;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Volo.Abp.EntityFrameworkCore.Modeling;
 
-namespace csuwf.PaperManagement.EntityFrameworkCore.Papers;
+namespace Wf.PaperManagement.EntityFrameworkCore.Papers;
 
 /// <summary>
 /// 服务单实体配置

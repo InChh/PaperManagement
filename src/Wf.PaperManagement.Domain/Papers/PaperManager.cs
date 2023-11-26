@@ -1,12 +1,12 @@
 using System;
 using System.Threading.Tasks;
-using csuwf.PaperManagement.Workers;
+using Wf.PaperManagement.Workers;
 using Volo.Abp.Domain.Entities;
 using Volo.Abp.Domain.Repositories;
 using Volo.Abp.Domain.Services;
 using Volo.Abp.Guids;
 
-namespace csuwf.PaperManagement.Papers;
+namespace Wf.PaperManagement.Papers;
 
 public class PaperManager : DomainService
 {

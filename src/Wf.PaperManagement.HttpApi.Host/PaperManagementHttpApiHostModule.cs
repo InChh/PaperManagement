@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using csuwf.PaperManagement.EntityFrameworkCore;
+using Wf.PaperManagement.EntityFrameworkCore;
 using Keycloak.AuthServices.Authentication;
 using Keycloak.AuthServices.Sdk.Admin;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -30,7 +30,7 @@ using Volo.Abp.Modularity;
 using Volo.Abp.Swashbuckle;
 using Volo.Abp.VirtualFileSystem;
 
-namespace csuwf.PaperManagement;
+namespace Wf.PaperManagement;
 
 [DependsOn(
     typeof(PaperManagementHttpApiModule),

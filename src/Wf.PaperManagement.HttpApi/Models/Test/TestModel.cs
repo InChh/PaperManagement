@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace csuwf.PaperManagement.Models.Test;
+namespace Wf.PaperManagement.Models.Test;
 
 public class TestModel
 {

@@ -4,7 +4,6 @@
 @inject GlobalConfig GlobalConfig
 
 <MApp>
-    <MErrorHandler>
         <PPageTabsProvider>
             <CascadingValue Value="GlobalConfig.Culture.Name" Name="CultureName">
                 <MAppBar Elevation=0 App Height="100" Class="default-app-bar mx-6">
@@ -29,6 +28,7 @@
                 <Navigation/>
 
                 <MMain Class="fill-lighten-1">
+                    <MErrorHandler>
                     <CascadingValue Value="_enqueuedSnackbars">
                         <div class="pa-6">
                             @if (_pageTab == PageModes.PageTab)
@@ -43,6 +43,7 @@
                             }
                         </div>
                     </CascadingValue>
+                    </MErrorHandler>
                     <div Class="text-center">
                         <PEnqueuedSnackbars @ref="_enqueuedSnackbars"></PEnqueuedSnackbars>
                     </div>
@@ -50,8 +51,6 @@
                 <Settings @bind-PageModel="_pageTab" @bind-Show="_showSetting"/>
             </CascadingValue>
         </PPageTabsProvider>
-    </MErrorHandler>
-
 </MApp>
 
 @code {

@@ -1,6 +1,6 @@
 using Volo.Abp.Application.Dtos;
 
-namespace csuwf.PaperManagement.Common;
+namespace Wf.PaperManagement.Common;
 
 /// <summary>
 /// 分页、排序和过滤的输入DTO

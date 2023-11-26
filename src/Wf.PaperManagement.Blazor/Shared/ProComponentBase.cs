@@ -1,5 +1,6 @@
 ﻿using BlazorComponent.I18n;
 using Microsoft.AspNetCore.Components;
+using Volo.Abp.AspNetCore.Components;
 
 namespace Wf.PaperManagement.Blazor.Shared;
 

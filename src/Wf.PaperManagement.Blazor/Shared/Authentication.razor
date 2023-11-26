@@ -1,6 +1,7 @@
 @page "/authentication/{action}"
 @using Microsoft.AspNetCore.Components.WebAssembly.Authentication
 @inherits ProComponentBase
+@layout EmptyLayout
 @attribute [AllowAnonymous]
 
 <RemoteAuthenticatorView Action="@Action" OnLogInSucceeded="OnLogInSucceeded">
@@ -32,11 +33,17 @@
             </MContainer>
         </MRow>
     </CompletingLogOut>
+    <LogOutSucceeded>
+        <RedirectToLogin/>
+    </LogOutSucceeded>
 </RemoteAuthenticatorView>
 
 @code {
     [Inject]
     private IPopupService PopupService { get; set; } = default!;
+    
+    [Inject]
+    private NavigationManager NavigationManager { get; set; } = default!;
 
     [Parameter]
     public string? Action { get; set; }

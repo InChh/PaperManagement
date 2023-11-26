@@ -2,7 +2,7 @@ using System;
 using Volo.Abp;
 using Volo.Abp.Domain.Entities.Auditing;
 
-namespace csuwf.PaperManagement.Workers;
+namespace Wf.PaperManagement.Workers;
 
 public class Worker : FullAuditedEntity
 {

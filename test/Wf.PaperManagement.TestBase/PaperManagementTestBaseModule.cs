@@ -7,7 +7,7 @@ using Volo.Abp.Data;
 using Volo.Abp.Modularity;
 using Volo.Abp.Threading;
 
-namespace csuwf.PaperManagement;
+namespace Wf.PaperManagement;
 
 [DependsOn(
     typeof(AbpAutofacModule),

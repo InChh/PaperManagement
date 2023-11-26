@@ -1,11 +1,11 @@
-﻿using csuwf.PaperManagement.EntityFrameworkCore;
+﻿using Wf.PaperManagement.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Volo.Abp.Autofac;
 using Volo.Abp.Caching;
 using Volo.Abp.Caching.StackExchangeRedis;
 using Volo.Abp.Modularity;
 
-namespace csuwf.PaperManagement.DbMigrator;
+namespace Wf.PaperManagement.DbMigrator;
 
 [DependsOn(
     typeof(AbpAutofacModule),

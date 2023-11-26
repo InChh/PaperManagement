@@ -1,4 +1,4 @@
-﻿namespace csuwf.PaperManagement;
+﻿namespace Wf.PaperManagement;
 
 public static class PaperManagementConsts
 {

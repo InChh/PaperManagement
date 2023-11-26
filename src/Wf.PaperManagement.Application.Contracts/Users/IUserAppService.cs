@@ -1,10 +1,10 @@
 using System;
 using System.Threading.Tasks;
-using csuwf.PaperManagement.Common;
+using Wf.PaperManagement.Common;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.Application.Services;
 
-namespace csuwf.PaperManagement.Users;
+namespace Wf.PaperManagement.Users;
 
 public interface IUserAppService:IApplicationService
 {

@@ -1,10 +1,10 @@
 using System;
 using System.Threading.Tasks;
-using csuwf.PaperManagement.Common;
+using Wf.PaperManagement.Common;
 using Shouldly;
 using Xunit;
 
-namespace csuwf.PaperManagement.Papers;
+namespace Wf.PaperManagement.Papers;
 
 public sealed class PaperAppServiceTest : PaperManagementApplicationTestBase
 {

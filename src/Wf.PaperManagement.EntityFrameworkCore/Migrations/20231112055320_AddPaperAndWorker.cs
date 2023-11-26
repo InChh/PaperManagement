@@ -4,7 +4,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 #nullable disable
 
-namespace csuwf.PaperManagement.Migrations
+namespace Wf.PaperManagement.Migrations
 {
     /// <inheritdoc />
     public partial class AddPaperAndWorker : Migration

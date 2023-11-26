@@ -1,7 +1,7 @@
-﻿using csuwf.PaperManagement.Localization;
+﻿using Wf.PaperManagement.Localization;
 using Volo.Abp.Application.Services;
 
-namespace csuwf.PaperManagement;
+namespace Wf.PaperManagement;
 
 /* Inherit your application services from this class.
  */

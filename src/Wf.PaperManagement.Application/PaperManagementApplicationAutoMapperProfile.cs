@@ -1,10 +1,10 @@
 ﻿using AutoMapper;
-using csuwf.PaperManagement.Papers;
-using csuwf.PaperManagement.Users;
-using csuwf.PaperManagement.Workers;
+using Wf.PaperManagement.Papers;
+using Wf.PaperManagement.Users;
+using Wf.PaperManagement.Workers;
 using Keycloak.AuthServices.Sdk.Admin.Models;
 
-namespace csuwf.PaperManagement;
+namespace Wf.PaperManagement;
 
 public class PaperManagementApplicationAutoMapperProfile : Profile
 {

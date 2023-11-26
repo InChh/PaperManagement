@@ -5,12 +5,12 @@
   <PropertyGroup>
     <TargetFramework>net7.0</TargetFramework>
     <Nullable>enable</Nullable>
-    <RootNamespace>csuwf.PaperManagement</RootNamespace>
+    <RootNamespace>Wf.PaperManagement</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\Wf.PaperManagement.Application\Wf.PaperManagement.Application.csproj" />
-    <ProjectReference Include="..\csuwf.PaperManagement.Domain.Tests\csuwf.PaperManagement.Domain.Tests.csproj" />
+    <ProjectReference Include="..\Wf.PaperManagement.Domain.Tests\Wf.PaperManagement.Domain.Tests.csproj" />
   </ItemGroup>
 
   <ItemGroup>

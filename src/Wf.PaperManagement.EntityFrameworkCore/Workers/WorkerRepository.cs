@@ -1,10 +1,10 @@
 using System;
 using System.Threading.Tasks;
-using csuwf.PaperManagement.EntityFrameworkCore;
+using Wf.PaperManagement.EntityFrameworkCore;
 using Volo.Abp.Domain.Repositories.EntityFrameworkCore;
 using Volo.Abp.EntityFrameworkCore;
 
-namespace csuwf.PaperManagement.Workers;
+namespace Wf.PaperManagement.Workers;
 
 public class WorkerRepository : EfCoreRepository<PaperManagementDbContext, Worker>, IWorkerRepository
 {

@@ -1,10 +1,10 @@
-using csuwf.PaperManagement.Papers;
-using csuwf.PaperManagement.Workers;
+using Wf.PaperManagement.Papers;
+using Wf.PaperManagement.Workers;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Volo.Abp.EntityFrameworkCore.Modeling;
 
-namespace csuwf.PaperManagement.EntityFrameworkCore.Papers;
+namespace Wf.PaperManagement.EntityFrameworkCore.Papers;
 
 /// <summary>
 /// 队员实体配置

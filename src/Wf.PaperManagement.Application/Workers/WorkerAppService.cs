@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Volo.Abp.Application.Dtos;
 
-namespace csuwf.PaperManagement.Workers;
+namespace Wf.PaperManagement.Workers;
 
 [Authorize]
 public class WorkerAppService : PaperManagementAppService, IWorkerAppService

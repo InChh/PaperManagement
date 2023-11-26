@@ -2,12 +2,12 @@ using System;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Threading.Tasks;
-using csuwf.PaperManagement.Papers;
+using Wf.PaperManagement.Papers;
 using Microsoft.AspNetCore.Authorization;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.Domain.Repositories;
 
-namespace csuwf.PaperManagement.Statistics;
+namespace Wf.PaperManagement.Statistics;
 
 [Authorize]
 public class StatisticAppService : PaperManagementAppService, IStatisticAppService

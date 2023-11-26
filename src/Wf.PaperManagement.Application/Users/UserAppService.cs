@@ -3,14 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Threading.Tasks;
-using csuwf.PaperManagement.Common;
+using Wf.PaperManagement.Common;
 using Keycloak.AuthServices.Sdk.Admin;
 using Keycloak.AuthServices.Sdk.Admin.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.Extensions.Options;
 using Volo.Abp.Application.Dtos;
 
-namespace csuwf.PaperManagement.Users;
+namespace Wf.PaperManagement.Users;
 
 [Authorize]
 public class UserAppService : PaperManagementAppService, IUserAppService

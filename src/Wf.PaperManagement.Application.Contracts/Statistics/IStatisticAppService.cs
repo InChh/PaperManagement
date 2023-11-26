@@ -1,9 +1,9 @@
 using System.Threading.Tasks;
-using csuwf.PaperManagement.Common;
+using Wf.PaperManagement.Common;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.Application.Services;
 
-namespace csuwf.PaperManagement.Statistics;
+namespace Wf.PaperManagement.Statistics;
 
 public interface IStatisticAppService : IApplicationService
 {

@@ -13,22 +13,23 @@
     "Children": [
       {
         "Id": 3,
-        "Title": "List",
+        "Title": "Paper.List",
         "Icon": "mdi-circle",
         "Href": "app/paper/list"
       },
       {
         "Id": 4,
-        "Title": "Edit",
+        "Title": "Paper.Edit",
         "Icon": "mdi-circle",
-        "Href": "app/paper/edit"
+        "Href": "app/paper/edit",
+        "Hide": true
       },
       {
         "Id": 5,
-        "Title": "Detail",
+        "Title": "Paper.Add",
         "Icon": "mdi-circle",
-        "Hide": true,
-        "Href": "app/paper/detail"
+        "Href": "app/paper/add",
+        "Hide": true
       }
     ]
   },

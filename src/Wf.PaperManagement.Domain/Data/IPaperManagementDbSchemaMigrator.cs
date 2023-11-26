@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 
-namespace csuwf.PaperManagement.Data;
+namespace Wf.PaperManagement.Data;
 
 public interface IPaperManagementDbSchemaMigrator
 {

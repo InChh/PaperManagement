@@ -9,10 +9,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Mapster" Version="7.4.0" />
     <PackageReference Include="Masa.Blazor" Version="1.2.2" />
     <PackageReference Include="Microsoft.AspNetCore.Components.Authorization" Version="8.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="8.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="8.0.0" />
+    <PackageReference Include="Volo.Abp.Http.Client.IdentityModel.WebAssembly" Version="7.4.2" />
   </ItemGroup>
 
   <ItemGroup>
@@ -55,6 +57,11 @@
     <_ContentIncludedByDefault Remove="wwwroot\img\analytics\json.png" />
     <_ContentIncludedByDefault Remove="wwwroot\img\analytics\left.png" />
     <_ContentIncludedByDefault Remove="wwwroot\img\analytics\right.png" />
+    <_ContentIncludedByDefault Remove="ClientProxies\app-generate-proxy.json" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="ClientProxies\app-generate-proxy.json" />
   </ItemGroup>
 
 

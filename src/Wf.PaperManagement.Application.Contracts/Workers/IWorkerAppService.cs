@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.Application.Services;
 
-namespace csuwf.PaperManagement.Workers;
+namespace Wf.PaperManagement.Workers;
 
 public interface IWorkerAppService : IApplicationService
 {

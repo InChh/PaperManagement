@@ -25,11 +25,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Wf.PaperManagement.HttpApi.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Wf.PaperManagement.HttpApi.Host", "src\Wf.PaperManagement.HttpApi.Host\Wf.PaperManagement.HttpApi.Host.csproj", "{E6D5BF0E-DE92-4D82-A352-EF04B37CB11C}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "csuwf.PaperManagement.EntityFrameworkCore.Tests", "test\csuwf.PaperManagement.EntityFrameworkCore.Tests\csuwf.PaperManagement.EntityFrameworkCore.Tests.csproj", "{1FE30EB9-74A9-47F5-A9F6-7B1FAB672D81}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Wf.PaperManagement.EntityFrameworkCore.Tests", "test\Wf.PaperManagement.EntityFrameworkCore.Tests\Wf.PaperManagement.EntityFrameworkCore.Tests.csproj", "{1FE30EB9-74A9-47F5-A9F6-7B1FAB672D81}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Wf.PaperManagement.TestBase", "test\Wf.PaperManagement.TestBase\Wf.PaperManagement.TestBase.csproj", "{91853F21-9CD9-4132-BC29-A7D5D84FFFE7}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "csuwf.PaperManagement.Domain.Tests", "test\csuwf.PaperManagement.Domain.Tests\csuwf.PaperManagement.Domain.Tests.csproj", "{E512F4D9-9375-480F-A2F6-A46509F9D824}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Wf.PaperManagement.Domain.Tests", "test\Wf.PaperManagement.Domain.Tests\Wf.PaperManagement.Domain.Tests.csproj", "{E512F4D9-9375-480F-A2F6-A46509F9D824}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Wf.PaperManagement.DbMigrator", "src\Wf.PaperManagement.DbMigrator\Wf.PaperManagement.DbMigrator.csproj", "{AA94D832-1CCC-4715-95A9-A483F23A1A5D}"
 EndProject

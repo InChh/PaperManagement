@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Threading.Tasks;
-using csuwf.PaperManagement.Common;
+using Wf.PaperManagement.Common;
 using Microsoft.AspNetCore.Authorization;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.Domain.Repositories;
 using Volo.Abp.Validation;
 
-namespace csuwf.PaperManagement.Papers;
+namespace Wf.PaperManagement.Papers;
 
 [Authorize]
 public class PaperAppService : PaperManagementAppService, IPaperAppService

@@ -1,14 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using csuwf.PaperManagement.Papers;
-using csuwf.PaperManagement.Workers;
+using Wf.PaperManagement.Papers;
+using Wf.PaperManagement.Workers;
 using Volo.Abp.Data;
 using Volo.Abp.DependencyInjection;
 using Volo.Abp.Domain.Repositories;
 using Volo.Abp.Guids;
 
-namespace csuwf.PaperManagement;
+namespace Wf.PaperManagement;
 
 public class PaperManagementTestDataSeedContributor : IDataSeedContributor, ITransientDependency
 {

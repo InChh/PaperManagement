@@ -1,9 +1,9 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using csuwf.PaperManagement.Common;
+using Wf.PaperManagement.Common;
 
-namespace csuwf.PaperManagement.Statistics;
+namespace Wf.PaperManagement.Statistics;
 
 public class GetWorkerResolveCountDto : PagedSortedAndFilteredResultRequestDto, IValidatableObject
 {

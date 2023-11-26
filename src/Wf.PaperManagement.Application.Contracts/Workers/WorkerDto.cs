@@ -1,7 +1,7 @@
 using System;
 using Volo.Abp.Application.Dtos;
 
-namespace csuwf.PaperManagement.Workers;
+namespace Wf.PaperManagement.Workers;
 
 public class WorkerDto : FullAuditedEntityDto
 {

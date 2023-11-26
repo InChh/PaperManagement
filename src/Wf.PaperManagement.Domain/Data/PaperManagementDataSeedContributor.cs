@@ -1,8 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using csuwf.PaperManagement.Papers;
-using csuwf.PaperManagement.Workers;
+using Wf.PaperManagement.Papers;
+using Wf.PaperManagement.Workers;
 using Microsoft.Extensions.Hosting;
 using Volo.Abp.Data;
 using Volo.Abp.DependencyInjection;
@@ -10,7 +10,7 @@ using Volo.Abp.Domain.Repositories;
 using Volo.Abp.Guids;
 using Volo.Abp.Uow;
 
-namespace csuwf.PaperManagement.Data;
+namespace Wf.PaperManagement.Data;
 
 public class PaperManagementDataSeedContributor : IDataSeedContributor, ITransientDependency
 {

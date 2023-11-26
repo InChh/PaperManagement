@@ -1,4 +1,4 @@
-namespace csuwf.PaperManagement.Statistics;
+namespace Wf.PaperManagement.Statistics;
 
 public class WorkerResolveCountDto
 {

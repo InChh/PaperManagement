@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
 using Volo.Abp.DependencyInjection;
 
-namespace csuwf.PaperManagement.Data;
+namespace Wf.PaperManagement.Data;
 
 /* This is used if database provider does't define
  * IPaperManagementDbSchemaMigrator implementation.

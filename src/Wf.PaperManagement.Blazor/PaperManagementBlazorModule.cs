@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Net.Http;
 using System.Threading.Tasks;
-using csuwf.PaperManagement;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Volo.Abp;
 using Volo.Abp.Autofac.WebAssembly;
+using Volo.Abp.Http.Client.IdentityModel.WebAssembly;
 using Volo.Abp.Modularity;
 using Volo.Abp.Security.Claims;
 using Wf.PaperManagement.Blazor.Shared;
@@ -15,7 +16,8 @@ namespace Wf.PaperManagement.Blazor;
 
 [DependsOn(
     typeof(AbpAutofacWebAssemblyModule),
-    typeof(PaperManagementHttpApiClientModule)
+    typeof(PaperManagementHttpApiClientModule),
+    typeof(AbpHttpClientIdentityModelWebAssemblyModule)
 )]
 public class PaperManagementBlazorModule : AbpModule
 {
@@ -41,9 +43,9 @@ public class PaperManagementBlazorModule : AbpModule
                 theme.Themes.Light.Primary = "#4318FF";
                 theme.Themes.Light.Accent = "#4318FF";
             });
-        }).AddI18nForWasmAsync($"{builder.Configuration["App:SelfUrl"]!.EnsureEndsWith('/')}i18n");
+        }).AddI18nForWasmAsync($"{builder.HostEnvironment.BaseAddress}/i18n");
 
-        await builder.Services.AddGlobalForWasmAsync(builder.Configuration["App:SelfUrl"]!);
+        await builder.Services.AddGlobalForWasmAsync(builder.HostEnvironment.BaseAddress);
     }
 
     private static void ConfigureAuthentication(WebAssemblyHostBuilder builder)

@@ -6,11 +6,11 @@ using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using Volo.Abp.EntityFrameworkCore;
-using csuwf.PaperManagement.EntityFrameworkCore;
+using Wf.PaperManagement.EntityFrameworkCore;
 
 #nullable disable
 
-namespace csuwf.PaperManagement.Migrations
+namespace Wf.PaperManagement.Migrations
 {
     [DbContext(typeof(PaperManagementDbContext))]
     [Migration("20231112055320_AddPaperAndWorker")]
@@ -351,7 +351,7 @@ namespace csuwf.PaperManagement.Migrations
                     b.ToTable("AbpBackgroundJobs", (string)null);
                 });
 
-            modelBuilder.Entity("csuwf.PaperManagement.Papers.Paper", b =>
+            modelBuilder.Entity("Wf.PaperManagement.Papers.Paper", b =>
                 {
                     b.Property<Guid>("Id")
                         .HasColumnType("uuid");
@@ -461,7 +461,7 @@ namespace csuwf.PaperManagement.Migrations
                     b.ToTable("PmPapers", (string)null);
                 });
 
-            modelBuilder.Entity("csuwf.PaperManagement.Workers.Worker", b =>
+            modelBuilder.Entity("Wf.PaperManagement.Workers.Worker", b =>
                 {
                     b.Property<int>("WorkerId")
                         .ValueGeneratedOnAdd()
@@ -539,19 +539,19 @@ namespace csuwf.PaperManagement.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("csuwf.PaperManagement.Papers.Paper", b =>
+            modelBuilder.Entity("Wf.PaperManagement.Papers.Paper", b =>
                 {
-                    b.HasOne("csuwf.PaperManagement.Workers.Worker", "Receiver")
+                    b.HasOne("Wf.PaperManagement.Workers.Worker", "Receiver")
                         .WithMany()
                         .HasForeignKey("ReceiverId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("csuwf.PaperManagement.Workers.Worker", "Worker2")
+                    b.HasOne("Wf.PaperManagement.Workers.Worker", "Worker2")
                         .WithMany()
                         .HasForeignKey("Worker2Id");
 
-                    b.HasOne("csuwf.PaperManagement.Workers.Worker", "Worker")
+                    b.HasOne("Wf.PaperManagement.Workers.Worker", "Worker")
                         .WithMany()
                         .HasForeignKey("WorkerId");
 

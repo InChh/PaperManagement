@@ -3,10 +3,11 @@ using Volo.Abp.Http.Client;
 using Volo.Abp.Modularity;
 using Volo.Abp.VirtualFileSystem;
 
-namespace csuwf.PaperManagement;
+namespace Wf.PaperManagement;
 
 [DependsOn(
-    typeof(AbpHttpClientModule)
+    typeof(AbpHttpClientModule),
+    typeof(PaperManagementApplicationContractsModule)
 )]
 public class PaperManagementHttpApiClientModule : AbpModule
 {
@@ -14,7 +15,7 @@ public class PaperManagementHttpApiClientModule : AbpModule
 
     public override void ConfigureServices(ServiceConfigurationContext context)
     {
-        context.Services.AddStaticHttpClientProxies(
+        context.Services.AddHttpClientProxies(
             typeof(PaperManagementApplicationContractsModule).Assembly,
             RemoteServiceName
         );

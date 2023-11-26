@@ -1,5 +1,5 @@
-@page "/app/paper/edit/{id:Guid}"
-@page "/app/paper/edit"
+@page "/app/paper/edit/{id:guid?}"
+@attribute [Authorize(Roles = "worker")]
 
 <Add Id="@Id"></Add>
 

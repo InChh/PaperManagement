@@ -1,6 +1,6 @@
 ﻿using Volo.Abp.Modularity;
 
-namespace csuwf.PaperManagement;
+namespace Wf.PaperManagement;
 
 [DependsOn(
     typeof(PaperManagementApplicationModule),

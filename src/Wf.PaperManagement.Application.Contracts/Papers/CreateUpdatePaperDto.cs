@@ -1,7 +1,7 @@
 using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace csuwf.PaperManagement.Papers;
+namespace Wf.PaperManagement.Papers;
 
 /// <summary>
 /// 创建或更新服务单DTO
@@ -14,35 +14,35 @@ public class CreateUpdatePaperDto
     /// </summary>
     [Required]
     [MaxLength(PaperConsts.MaxNameLength)]
-    public string Name { get; private set; } = null!;
+    public string Name { get; set; } = null!;
 
     /// <summary>
     /// 客户联系电话
     /// </summary>
     [Required]
     [Phone]
-    public string PhoneNumber { get; private set; } = null!;
+    public string PhoneNumber { get; set; } = null!;
 
     /// <summary>
     /// 地址
     /// </summary>
     [Required]
     [MaxLength(PaperConsts.MaxAddressLength)]
-    public string Address { get; private set; } = null!;
+    public string Address { get; set; } = null!;
 
     /// <summary>
     /// 问题类型
     /// </summary>
     [Required]
     [MaxLength(PaperConsts.MaxProblemTypeLength)]
-    public string ProblemType { get; private set; } = null!;
+    public string ProblemType { get; set; } = null!;
 
     /// <summary>
     /// 问题描述
     /// </summary>
     [Required]
     [MaxLength(PaperConsts.MaxProblemDescriptionLength)]
-    public string ProblemDescription { get; private set; } = null!;
+    public string ProblemDescription { get; set; } = null!;
 
     /// <summary>
     /// 解决方法

@@ -7,7 +7,7 @@ using Volo.Abp.Localization;
 using Volo.Abp.Modularity;
 using Volo.Abp.MultiTenancy;
 
-namespace csuwf.PaperManagement;
+namespace Wf.PaperManagement;
 
 [DependsOn(
     typeof(PaperManagementDomainSharedModule),

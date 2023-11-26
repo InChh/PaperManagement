@@ -2,7 +2,7 @@ using System;
 using System.Threading.Tasks;
 using Volo.Abp.Domain.Repositories;
 
-namespace csuwf.PaperManagement.Workers;
+namespace Wf.PaperManagement.Workers;
 
 public interface IWorkerRepository : IRepository<Worker>
 {

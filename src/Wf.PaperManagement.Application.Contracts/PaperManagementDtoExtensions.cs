@@ -1,6 +1,6 @@
 ﻿using Volo.Abp.Threading;
 
-namespace csuwf.PaperManagement;
+namespace Wf.PaperManagement;
 
 public static class PaperManagementDtoExtensions
 {

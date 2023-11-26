@@ -7,7 +7,7 @@ using Volo.Abp.EntityFrameworkCore.PostgreSql;
 using Volo.Abp.Modularity;
 
 
-namespace csuwf.PaperManagement.EntityFrameworkCore;
+namespace Wf.PaperManagement.EntityFrameworkCore;
 
 [DependsOn(
     typeof(PaperManagementDomainModule),

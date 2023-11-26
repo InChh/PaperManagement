@@ -1,4 +1,4 @@
-namespace csuwf.PaperManagement.Workers;
+namespace Wf.PaperManagement.Workers;
 
 public class WorkerConsts
 {

@@ -1,11 +1,11 @@
 using System;
 using System.Text.RegularExpressions;
-using csuwf.PaperManagement.Workers;
+using Wf.PaperManagement.Workers;
 using Volo.Abp;
 using Volo.Abp.Domain.Entities.Auditing;
 using Volo.Abp.Validation;
 
-namespace csuwf.PaperManagement.Papers;
+namespace Wf.PaperManagement.Papers;
 
 public class Paper : FullAuditedAggregateRoot<Guid>
 {

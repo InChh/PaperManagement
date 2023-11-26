@@ -2,10 +2,10 @@
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using csuwf.PaperManagement.Data;
+using Wf.PaperManagement.Data;
 using Volo.Abp.DependencyInjection;
 
-namespace csuwf.PaperManagement.EntityFrameworkCore;
+namespace Wf.PaperManagement.EntityFrameworkCore;
 
 public class EntityFrameworkCorePaperManagementDbSchemaMigrator
     : IPaperManagementDbSchemaMigrator, ITransientDependency

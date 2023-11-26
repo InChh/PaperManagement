@@ -3,7 +3,7 @@ using System.Net;
 using Microsoft.AspNetCore.Mvc.Filters;
 using Volo.Abp.Domain.Entities;
 
-namespace csuwf.PaperManagement;
+namespace Wf.PaperManagement;
 
 public class RefitExceptionHandlerFilter : IExceptionFilter
 {

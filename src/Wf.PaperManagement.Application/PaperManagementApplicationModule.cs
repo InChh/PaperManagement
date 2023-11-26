@@ -2,7 +2,7 @@ using Volo.Abp.AutoMapper;
 using Volo.Abp.Modularity;
 
 
-namespace csuwf.PaperManagement;
+namespace Wf.PaperManagement;
 
 [DependsOn(
     typeof(PaperManagementDomainModule),

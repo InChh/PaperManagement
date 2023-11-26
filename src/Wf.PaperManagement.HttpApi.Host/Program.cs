@@ -6,7 +6,7 @@ using Microsoft.Extensions.Hosting;
 using Serilog;
 using Serilog.Events;
 
-namespace csuwf.PaperManagement;
+namespace Wf.PaperManagement;
 
 public class Program
 {

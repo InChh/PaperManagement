@@ -1,4 +1,4 @@
-namespace csuwf.PaperManagement.Users;
+namespace Wf.PaperManagement.Users;
 
 public class UserDto
 {

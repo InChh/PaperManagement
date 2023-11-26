@@ -5,7 +5,7 @@ using Microsoft.Extensions.Logging;
 using Serilog;
 using Serilog.Events;
 
-namespace csuwf.PaperManagement.DbMigrator;
+namespace Wf.PaperManagement.DbMigrator;
 
 class Program
 {
@@ -16,9 +16,9 @@ class Program
             .MinimumLevel.Override("Microsoft", LogEventLevel.Warning)
             .MinimumLevel.Override("Volo.Abp", LogEventLevel.Warning)
 #if DEBUG
-                .MinimumLevel.Override("csuwf.PaperManagement", LogEventLevel.Debug)
+                .MinimumLevel.Override("Wf.PaperManagement", LogEventLevel.Debug)
 #else
-                .MinimumLevel.Override("csuwf.PaperManagement", LogEventLevel.Information)
+                .MinimumLevel.Override("Wf.PaperManagement", LogEventLevel.Information)
 #endif
                 .Enrich.FromLogContext()
             .WriteTo.Async(c => c.File("Logs/logs.txt"))

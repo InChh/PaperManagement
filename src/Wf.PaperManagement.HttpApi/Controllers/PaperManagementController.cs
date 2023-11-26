@@ -1,9 +1,9 @@
 ﻿using System;
-using csuwf.PaperManagement.Localization;
+using Wf.PaperManagement.Localization;
 using Microsoft.AspNetCore.Mvc;
 using Volo.Abp.AspNetCore.Mvc;
 
-namespace csuwf.PaperManagement.Controllers;
+namespace Wf.PaperManagement.Controllers;
 
 /* Inherit your controllers from this class.
  */

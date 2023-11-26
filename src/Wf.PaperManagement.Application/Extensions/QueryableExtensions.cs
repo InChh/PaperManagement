@@ -1,6 +1,6 @@
 // ReSharper disable once CheckNamespace
 
-using csuwf.PaperManagement.Common;
+using Wf.PaperManagement.Common;
 
 namespace System.Linq;
 

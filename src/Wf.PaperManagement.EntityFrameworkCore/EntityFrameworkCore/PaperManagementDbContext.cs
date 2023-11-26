@@ -1,5 +1,5 @@
-﻿using csuwf.PaperManagement.Papers;
-using csuwf.PaperManagement.Workers;
+﻿using Wf.PaperManagement.Papers;
+using Wf.PaperManagement.Workers;
 using Microsoft.EntityFrameworkCore;
 using Volo.Abp.AuditLogging.EntityFrameworkCore;
 using Volo.Abp.BackgroundJobs.EntityFrameworkCore;
@@ -7,7 +7,7 @@ using Volo.Abp.Data;
 using Volo.Abp.EntityFrameworkCore;
 
 
-namespace csuwf.PaperManagement.EntityFrameworkCore;
+namespace Wf.PaperManagement.EntityFrameworkCore;
 
 [ConnectionStringName("Default")]
 public class PaperManagementDbContext :

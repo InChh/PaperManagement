@@ -1,38 +1,35 @@
 using System;
 using Volo.Abp.Application.Dtos;
 
-namespace csuwf.PaperManagement.Papers;
+namespace Wf.PaperManagement.Papers;
 
 public class PaperDto : FullAuditedEntityDto<Guid>
 {
-    protected PaperDto()
-    {
-    }
 
     /// <summary>
     /// 客户姓名
     /// </summary>
-    public string Name { get; private set; }
+    public string Name { get; set; }
 
     /// <summary>
     /// 客户联系电话
     /// </summary>
-    public string PhoneNumber { get; private set; }
+    public string PhoneNumber { get; set; }
 
     /// <summary>
     /// 地址
     /// </summary>
-    public string Address { get; private set; }
+    public string Address { get; set; }
 
     /// <summary>
     /// 问题类型
     /// </summary>
-    public string ProblemType { get; private set; }
+    public string ProblemType { get; set; }
 
     /// <summary>
     /// 问题描述
     /// </summary>
-    public string ProblemDescription { get; private set; }
+    public string ProblemDescription { get; set; }
 
     /// <summary>
     /// 解决方法
@@ -47,7 +44,7 @@ public class PaperDto : FullAuditedEntityDto<Guid>
     /// <summary>
     /// 拿单队员工号
     /// </summary>
-    public int ReceiverId { get; private set; }
+    public int ReceiverId { get; set; }
 
     /// <summary>
     /// 拿单队员姓名
@@ -57,7 +54,7 @@ public class PaperDto : FullAuditedEntityDto<Guid>
     /// <summary>
     /// 出单队员工号
     /// </summary>
-    public int? WorkerId { get; private set; }
+    public int? WorkerId { get; set; }
 
     /// <summary>
     /// 出单队员姓名
@@ -67,7 +64,7 @@ public class PaperDto : FullAuditedEntityDto<Guid>
     /// <summary>
     /// 出单队员工号
     /// </summary>
-    public int? Worker2Id { get; private set; }
+    public int? Worker2Id { get; set; }
 
     /// <summary>
     /// 出单队员姓名

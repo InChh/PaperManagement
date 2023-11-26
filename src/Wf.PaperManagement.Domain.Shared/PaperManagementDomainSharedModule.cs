@@ -1,4 +1,4 @@
-﻿using csuwf.PaperManagement.Localization;
+﻿using Wf.PaperManagement.Localization;
 using Volo.Abp.AuditLogging;
 using Volo.Abp.BackgroundJobs;
 using Volo.Abp.Localization;
@@ -7,7 +7,7 @@ using Volo.Abp.Modularity;
 using Volo.Abp.Validation.Localization;
 using Volo.Abp.VirtualFileSystem;
 
-namespace csuwf.PaperManagement;
+namespace Wf.PaperManagement;
 
 [DependsOn(
     typeof(AbpAuditLoggingDomainSharedModule),

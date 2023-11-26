@@ -6,11 +6,11 @@ using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using Volo.Abp.EntityFrameworkCore;
-using csuwf.PaperManagement.EntityFrameworkCore;
+using Wf.PaperManagement.EntityFrameworkCore;
 
 #nullable disable
 
-namespace csuwf.PaperManagement.Migrations
+namespace Wf.PaperManagement.Migrations
 {
     [DbContext(typeof(PaperManagementDbContext))]
     [Migration("20231111070259_Initial")]

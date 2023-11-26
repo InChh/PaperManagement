@@ -10,7 +10,7 @@ using Microsoft.Extensions.Logging.Abstractions;
 using Volo.Abp.Data;
 using Volo.Abp.DependencyInjection;
 
-namespace csuwf.PaperManagement.Data;
+namespace Wf.PaperManagement.Data;
 
 public class PaperManagementDbMigrationService : ITransientDependency
 {

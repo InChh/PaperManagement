@@ -3,12 +3,12 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using csuwf.PaperManagement.Data;
+using Wf.PaperManagement.Data;
 using Serilog;
 using Volo.Abp;
 using Volo.Abp.Data;
 
-namespace csuwf.PaperManagement.DbMigrator;
+namespace Wf.PaperManagement.DbMigrator;
 
 public class DbMigratorHostedService : IHostedService
 {

@@ -1,6 +1,6 @@
 ﻿using Volo.Abp.Localization;
 
-namespace csuwf.PaperManagement.Localization;
+namespace Wf.PaperManagement.Localization;
 
 [LocalizationResourceName("PaperManagement")]
 public class PaperManagementResource
