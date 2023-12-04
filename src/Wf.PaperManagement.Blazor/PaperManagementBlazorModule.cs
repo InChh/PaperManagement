@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Net.Http;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Volo.Abp;
 using Volo.Abp.Autofac.WebAssembly;
 using Volo.Abp.Http.Client.IdentityModel.WebAssembly;
 using Volo.Abp.Modularity;
@@ -25,10 +25,13 @@ public class PaperManagementBlazorModule : AbpModule
     {
         var environment = context.Services.GetSingletonInstance<IWebAssemblyHostEnvironment>();
         var builder = context.Services.GetSingletonInstance<WebAssemblyHostBuilder>();
+        AbpClaimTypes.UserName = ClaimTypes.Name;
+        AbpClaimTypes.Name = ClaimTypes.GivenName;
+        AbpClaimTypes.SurName = ClaimTypes.Surname;
+        AbpClaimTypes.Role = ClaimTypes.Role;
+        AbpClaimTypes.Email = ClaimTypes.Email;
 
         ConfigureAuthentication(builder);
-        builder.Services.AddOptions();
-        builder.Services.AddAuthorizationCore();
         ConfigureHttpClient(context, environment);
         await ConfigureMasa(builder);
         ConfigureUI(builder);
@@ -50,15 +53,16 @@ public class PaperManagementBlazorModule : AbpModule
 
     private static void ConfigureAuthentication(WebAssemblyHostBuilder builder)
     {
-        builder.Services.AddOidcAuthentication(options =>
-        {
-            builder.Configuration.Bind("AuthServer", options.ProviderOptions);
-            options.UserOptions.NameClaim = AbpClaimTypes.Name;
-            options.UserOptions.RoleClaim = AbpClaimTypes.Role;
-
-            options.ProviderOptions.DefaultScopes.Add("offline_access");
-            options.ProviderOptions.DefaultScopes.Remove("profile");
-        });
+        builder.Services
+            .AddOidcAuthentication(options =>
+            {
+                builder.Configuration.Bind("AuthServer", options.ProviderOptions);
+                options.UserOptions.NameClaim = AbpClaimTypes.Name;
+                options.UserOptions.RoleClaim = AbpClaimTypes.Role;
+                //
+                options.ProviderOptions.DefaultScopes.Add("offline_access");
+                options.ProviderOptions.DefaultScopes.Remove("profile");
+            }).AddAccountClaimsPrincipalFactory<CustomUserFactory>();
     }
 
     private static void ConfigureUI(WebAssemblyHostBuilder builder)
