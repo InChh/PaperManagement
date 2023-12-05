@@ -1,0 +1,286 @@
+@page "/app/paper/list"
+@using Wf.PaperManagement.Papers
+@using Wf.PaperManagement.Common
+@using Volo.Abp.Users
+@using Microsoft.Extensions.Logging
+@using System.Security.Claims
+@using System.Text.Json
+@using Microsoft.AspNetCore.Components.WebAssembly.Authentication
+@using Volo.Abp.Security.Claims
+@inherits ProComponentBase
+@inject NavigationManager NavigationManager
+@inject ICurrentUser CurrentUser
+
+<MDataTable Headers="_headers"
+            Items="Papers"
+            ItemKey="p => p.Id.ToString()"
+            Loading="_loading"
+            ShowExpand
+             OnOptionsUpdate="HandleOptionsUpdate"
+             ServerItemsLength="_totalCount">
+     <TopContent>
+         <MToolbar Flat>
+            <MToolbarTitle>@T("Paper")</MToolbarTitle>
+                <MSpacer />
+                <MSelect Style="margin: 20px 10px 10px;"
+                         Items="_filterFieldSelects"
+                         ItemText="f => f.Text"
+                         ItemValue="f => f.Value"
+                         Label="@T("FilterField")"
+                         @bind-Value="_filterField">
+                </MSelect>
+                <MTextField @bind-Value="_filterValue" OnKeyDown="OnEnterKeyDown" Label="@T("FilterValue")"></MTextField>
+                <MSpacer />
+                <MButton Color="Color.Primary"
+                         OnClick='() => NavigationManager.NavigateTo("/app/paper/add")'>
+                    <MIcon>mdi-plus</MIcon>
+                    <MText>@T("Paper.Add")</MText>
+            </MButton>
+        </MToolbar>
+    </TopContent>
+    <ItemColContent>
+        @switch (context.Header.Value)
+        {
+            case "actions":
+                <MIcon Small Show=@CurrentUser.IsInRole("worker")
+                        Class="mr-2"
+                        OnClick='() => NavigationManager.NavigateTo("/app/paper/edit/" + context.Item.Id)'>
+                     mdi-pencil
+                 </MIcon>
+                <MIcon Small Show=@CurrentUser.IsInRole("admin")
+                        OnClick="() => DeletePaper(context.Item)">
+                     mdi-delete
+                 </MIcon>
+                break;
+            case nameof(PaperDto.Status):
+                {
+                    if (context.Value is PaperStatus status)
+                    {
+                        switch (status)
+                        {
+                            case PaperStatus.Processed:
+                                <MChip Color="green">@T("Paper.Status.Processed")</MChip>
+                                break;
+                            case PaperStatus.UnProcessed:
+                                <MChip Color="red">@T("Paper.Status.Unprocessed")</MChip>
+                                break;
+                            case PaperStatus.Deprecated:
+                                <MChip>@T("Paper.Status.Deprecated")</MChip>
+                                break;
+                            default:
+                                throw new ArgumentOutOfRangeException();
+                        }
+                    }
+                    break;
+                }
+            case nameof(PaperDto.WorkerId):
+                {
+                    if (context.Item.WorkerId.HasValue)
+                    {
+                        <MChip Color="green">@context.Item.WorkerId (@context.Item.WorkerName)</MChip>
+                    }
+                    if (context.Item.Worker2Id.HasValue)
+                    {
+                        <MChip Color="green">@context.Item.Worker2Id (@context.Item.Worker2Name)</MChip>
+                    }
+                    break;
+                }
+            default:
+                @context.Value
+                break;
+        }
+    </ItemColContent>
+    <ExpandedItemContent>
+        <td colspan="@_headers.Count">
+@*             <MCol Class="flex-grow-1" Style="min-width:100px">
+                <MLabel Value>@T("Paper.Address"):</MLabel>
+                    <br />
+                    @context.Item.Address
+            </MCol>
+            <MCol Class="flex-grow-1" Style="min-width: 100px">
+                <MLabel Value>@T("Paper.Solution"):</MLabel>
+                    <br />
+                    @context.Item.Solution
+            </MCol>
+            <MCol Class="flex-grow-1" Style="min-width: 100px">
+                <MLabel Value>@T("Paper.Receiver"):</MLabel>
+                    <br />
+                    @context.Item.ReceiverName
+            </MCol>
+            <MCol Class="flex-grow-1" Style="min-width: 100px">
+                <MLabel Value>@T("Paper.CompleteTime"):</MLabel>
+                    <br />
+                    @context.Item.CompleteTime
+            </MCol>
+ *@            <MDescriptions Style="margin: 10px">
+                <MDescriptionsItem Label='@T("Paper.Address")'>
+                    @context.Item.Address
+                </MDescriptionsItem>
+                <MDescriptionsItem Label='@T("Paper.Solution")'>
+                    @context.Item.Solution
+                </MDescriptionsItem>
+                <MDescriptionsItem Label='@T("Paper.Receiver")'>
+                    @context.Item.ReceiverName
+                </MDescriptionsItem>
+                <MDescriptionsItem Label='@T("Paper.CompleteTime")'>
+                    @context.Item.CompleteTime
+                </MDescriptionsItem>
+            </MDescriptions>
+        </td>
+    </ExpandedItemContent>
+</MDataTable>
+
+@code {
+
+    private class FilterOptions
+    {
+        public string Text { get; set; } = "";
+        public string Value { get; set; } = "";
+    }
+
+    private bool _loading = false;
+
+    public List<PaperDto> Papers { get; set; } = null!;
+    private int _totalCount;
+
+    private int _page = 1;
+    private int _pageSize = 10;
+    private string? _sorting;
+
+    [Inject]
+    private IPaperAppService PaperService { get; set; } = null!;
+
+    [Inject]
+    private IPopupService PopupService { get; set; } = null!;
+
+    private List<DataTableHeader<PaperDto>> _headers = new();
+
+    private List<FilterOptions> _filterFieldSelects = new();
+    private string? _filterField;
+    private string? _filterValue;
+
+    protected override void OnParametersSet()
+    {
+        _headers = new List<DataTableHeader<PaperDto>>()
+        {
+            new()
+            {
+                Text = T("Paper.Name"),
+                Sortable = false,
+                Value = nameof(PaperDto.Name)
+            },
+            new()
+            {
+                Text = T("Paper.PhoneNumber"),
+                Value = nameof(PaperDto.PhoneNumber)
+            },
+            new()
+            {
+                Text = T("Paper.ProblemDescription"),
+                Value = nameof(PaperDto.ProblemDescription)
+            },
+            new()
+            {
+                Text = T("Paper.Status"),
+                Value = nameof(PaperDto.Status),
+                Sortable = false
+            },
+            new()
+            {
+                Text = T("Paper.Worker"),
+                Value = nameof(PaperDto.WorkerId),
+            },
+            new()
+            {
+                Text = T("Paper.CreationTime"),
+                Value = nameof(PaperDto.CreationTime)
+            },
+            new()
+            {
+                Text = T("Actions"),
+                Value = "actions",
+                Sortable = false
+            }
+        };
+        _filterFieldSelects = new List<FilterOptions>
+        {
+            new()
+            {
+                Text = T("Paper.Name"),
+                Value = nameof(PaperDto.Name)
+            },
+            new()
+            {
+                Text = T("Paper.PhoneNumber"),
+                Value = nameof(PaperDto.PhoneNumber)
+            },
+            new()
+            {
+                Text = T("Paper.ProblemDescription"),
+                Value = nameof(PaperDto.ProblemDescription)
+            },
+            new()
+            {
+                Text = T("Paper.Status"),
+                Value = nameof(PaperDto.Status)
+            },
+            new()
+            {
+                Text = T("Paper.WorkerId"),
+                Value = nameof(PaperDto.WorkerId)
+            }
+        };
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+
+        await InitializeAsync();
+    }
+
+    private async Task InitializeAsync(int page = 1, int pageSize = 10, string? sorting = null, string? filterField = null, string? filterValue = null)
+    {
+        _loading = true;
+        var pagedData = await PaperService.GetListAsync(new PagedSortedAndFilteredResultRequestDto()
+            {
+                MaxResultCount = pageSize,
+                SkipCount = page * pageSize,
+                Sorting = sorting,
+                FilterField = filterField,
+                FilterValue = filterValue,
+            });
+        _totalCount = (int)pagedData.TotalCount;
+        Papers = new List<PaperDto>(pagedData.Items);
+        _loading = false;
+    }
+
+    private async Task HandleOptionsUpdate(DataOptions options)
+    {
+        _page = options.Page;
+        _pageSize = options.ItemsPerPage;
+        _sorting = options.SortBy[0] + " " + (options.SortDesc[0] ? "desc" : "asc");
+
+        await InitializeAsync(_page, _pageSize, _sorting, _filterField, _filterValue);
+    }
+
+    private async Task DeletePaper(PaperDto item)
+    {
+        _loading = true;
+        await PaperService.DeleteAsync(item.Id);
+        await PopupService.EnqueueSnackbarAsync(T("DeleteSuccess"), AlertTypes.Success);
+        await InitializeAsync(_page, _pageSize, _sorting, _filterField, _filterValue);
+        _loading = false;
+        await InvokeAsync(StateHasChanged);
+    }
+
+    private async Task OnEnterKeyDown(KeyboardEventArgs args)
+    {
+        if (args.Key != "Enter")
+        {
+            return;
+        }
+        await InitializeAsync(_page, _pageSize, _sorting, _filterField, _filterValue);
+    }
+
+}

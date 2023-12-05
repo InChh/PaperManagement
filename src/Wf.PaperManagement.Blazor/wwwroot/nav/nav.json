@@ -3,8 +3,7 @@
     "Id": 1,
     "Title": "Dashboard",
     "Icon": "mdi-trending-up",
-    "Href": "dashboard",
-    "Target": "Self"
+    "Href": "dashboard"
   },
   {
     "Id": 2,
@@ -28,8 +27,7 @@
         "Id": 5,
         "Title": "Paper.Add",
         "Icon": "mdi-circle",
-        "Href": "app/paper/add",
-        "Hide": true
+        "Href": "app/paper/add"
       }
     ]
   },
