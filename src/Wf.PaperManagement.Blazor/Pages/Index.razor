@@ -1,17 +1,15 @@
 ﻿@page "/"
-@using Wf.PaperManagement.Blazor.Global.Nav
 @using Wf.PaperManagement.Blazor.Data.Base
+@inherits LayoutComponentBase
+@inject NavigationManager Nav
 
 @code{
-
-    [Inject]
-    public required NavHelper Nav { get; set; }
 
     protected override void OnAfterRender(bool firstRender)
     {
         if (firstRender)
         {
-            Nav.NavigateTo(GlobalVariables.DefaultRoute);
+            Nav.NavigateTo(GlobalVariables.DefaultRoute,true);
         }
         base.OnAfterRender(firstRender);
     }
