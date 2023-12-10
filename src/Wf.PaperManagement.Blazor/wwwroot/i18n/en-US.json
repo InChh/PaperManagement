@@ -48,9 +48,11 @@
   "Paper.WorkerId": "Worker Id",
   "Paper.WorkerName": "Worker Name",
   "Paper.Worker": "Worker",
-  "Paper.Status.Processed": "已处理",
-  "Paper.Status.Unprocessed": "未处理",
-  "Paper.Status.Deprecated": "废单",
+  "Paper.Status.Processed": "Processed",
+  "Paper.Status.Unprocessed": "Unprocessed",
+  "Paper.Status.Deprecated": "Deprecated",
   "Actions": "Actions",
-  "DeleteSuccess": "Delete Success"
+  "DeleteSuccess": "Delete Success",
+  "AddSuccess": "Add Success",
+  "EditSuccess": "Edit Success"
 }

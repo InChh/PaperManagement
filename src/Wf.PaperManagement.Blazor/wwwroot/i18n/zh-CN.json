@@ -62,5 +62,7 @@
   "Paper.Status.Unprocessed": "未处理",
   "Paper.Status.Deprecated": "废单",
   "Actions": "操作",
-  "DeleteSuccess": "删除成功"
+  "DeleteSuccess": "删除成功",
+  "AddSuccess": "添加成功",
+  "EditSuccess": "修改成功"
 }

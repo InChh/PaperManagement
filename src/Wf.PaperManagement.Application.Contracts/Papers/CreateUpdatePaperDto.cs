@@ -59,17 +59,17 @@ public class CreateUpdatePaperDto
     /// 拿单队员工号
     /// </summary>
     [Required]
-    public int ReceiverId { get; private set; }
+    public int ReceiverId { get; set; }
 
     /// <summary>
     /// 出单队员工号
     /// </summary>
-    public int? WorkerId { get; private set; }
+    public int? WorkerId { get; set; }
 
     /// <summary>
     /// 出单队员工号
     /// </summary>
-    public int? Worker2Id { get; private set; }
+    public int? Worker2Id { get; set; }
 
     /// <summary>
     /// 拿单时间

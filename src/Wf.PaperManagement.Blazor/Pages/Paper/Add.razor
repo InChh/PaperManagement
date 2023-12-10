@@ -3,28 +3,159 @@
 @using Wf.PaperManagement.Papers
 @using Mapster
 @using Microsoft.Extensions.Logging
+@using Volo.Abp
 @using Volo.Abp.ObjectMapping
+@using Wf.PaperManagement.Common
+@using Wf.PaperManagement.Workers
 @attribute [Authorize(Roles = "worker")]
 
-<MRow>
+<MCard>
+    <MCardTitle>
+        @T(IsEdit ? "Paper.Edit" : "Paper.Add")
+    </MCardTitle>
     <MCardText>
-        <h1>add paper is edit: @IsEdit</h1>
-        @Id
+        <MForm @ref="_form" Model="FormData" EnableI18n EnableValidation>
+            <MRow>
+                <MCol Cols="4">
+                    <MTextField @bind-Value="FormData.Name" Label="@T("Paper.Name")"></MTextField>
+                </MCol>
+                <MCol Cols="4">
+                    <MTextField @bind-Value="FormData.PhoneNumber" Label='@T("Paper.PhoneNumber")'></MTextField>
+                </MCol>
+                <MCol Cols="4">
+                    <MAutocomplete
+                        Required
+                        Clearable
+                        TItem="WorkerDto"
+                        TValue="int?"
+                        TItemValue="int"
+                        @bind-Value="FormData.WorkerId"
+                        Label='@T("Paper.Worker")'
+                        OnSearchInputUpdate="UpdateSearchInputAsync"
+                        Items="_workerList"
+                        ItemText='dto => $"{dto.WorkerId}（{dto.Name}）"'
+                        ItemValue="dto => dto.WorkerId">
+                    </MAutocomplete>
+                </MCol>
+            </MRow>
+            <MRow>
+                <MCol Cols="8">
+                    <MTextField @bind-Value="FormData.Address" Label='@T("Paper.Address")'></MTextField>
+                </MCol>
+                <MCol Cols="4">
+                    <MAutocomplete
+                        Clearable
+                        TItem="WorkerDto"
+                        TValue="int?"
+                        TItemValue="int"
+                        @bind-Value="FormData.Worker2Id"
+                        Label='@T("Paper.Worker")'
+                        OnSearchInputUpdate="UpdateSearchInputAsync"
+                        Items="_workerList"
+                        ItemText='dto => $"{dto.WorkerId}（{dto.Name}）"'
+                        ItemValue="dto => dto.WorkerId">
+                    </MAutocomplete>
+                </MCol>
+            </MRow>
+            <MRow>
+                <MCol Cols="4">
+                    <MRadioGroup
+                        Required
+                        Column
+                        Label="@T("Paper.DeviceType")"
+                        @bind-Value="_deviceType">
+                        <MRadio
+                            Label="win7"
+                            Value="@("win7")">
+                        </MRadio>
+                        <MRadio
+                            Label="win8"
+                            Value="@("win8")">
+                        </MRadio>
+                        <MRadio
+                            Label="@T("Paper.DeviceType")"
+                            Value="@("win10/11")">
+                        </MRadio>
+                        <MRadio
+                            Label="@T("Paper.DeviceType")"
+                            Value="@("Linux")">
+                        </MRadio>
+                        <MRadio
+                            Label="@T("Paper.DeviceType")"
+                            Value="@("MacOS")">
+                        </MRadio>
+                        <MRadio
+                            Label="@T("Paper.DeviceType")"
+                            Value="@("Android")">
+                        </MRadio>
+                    </MRadioGroup>
+                </MCol>
+                <MCol Cols="4">
+                    <MRadioGroup
+                        Column
+                        @bind-Value="_deviceType">
+                        <MRadio
+                            Label="@T("Paper.DeviceType")"
+                            Value="@("台式机")">
+                        </MRadio>
+                        <MRadio
+                            Label="@T("Paper.DeviceType")"
+                            Value="@("笔记本")">
+                        </MRadio>
+                        <MRadio
+                            Label="@T("Paper.DeviceType")"
+                            Value="@("手机")">
+                        </MRadio>
+                    </MRadioGroup>
+                </MCol>
+                <MCol Cols="4">
+                    <MTextField
+                        @bind-Value="FormData.ProblemDescription"
+                        Label="@T("Paper.ProblemDescription")">
+                    </MTextField>
+                </MCol>
+            </MRow>
+            <MRow>
+                <MCol Cols="6">
+                    <MTextField @bind-Value="FormData.Note" Label="@T("Paper.Note")"></MTextField>
+                </MCol>
+                <MCol Cols="6">
+                    <MRadioGroup Required Row @bind-Value="FormData.Status">
+                        <MRadio Label="@T("Paper.Status.Processed")" Value="@PaperStatus.Processed"></MRadio>
+                        <MRadio Label="@T("Paper.Status.UnProcessed")" Value="@PaperStatus.UnProcessed"></MRadio>
+                        <MRadio Label="@T("Paper.Status.Deprecated")" Value="@PaperStatus.Deprecated"></MRadio>
+                    </MRadioGroup>
+                </MCol>
+            </MRow>
+            <MRow>
+                <MCol Cols="8">
+                    <MTextField @bind-Value="FormData.Solution"></MTextField>
+                </MCol>
+                <MCol Cols="4">
+                    <PDateTimePicker
+                        @bind-Value="FormData.CompleteTime"
+                        TimeFormat="TimeFormat.Hr24"
+                        ViewType="DateTimePickerViewType.Auto">
+                        <ActivatorContent Context="ctx">
+                            <MTextField @bind-Value="FormData.CompleteTime"
+                                        Label="@T("Paper.CompleteTime")"
+                                        Clearable
+                                        Filled
+                                        Readonly
+                                        @attributes="@ctx.Attrs">
+                            </MTextField>
+                        </ActivatorContent>
+                    </PDateTimePicker>
+                </MCol>
+            </MRow>
+            <MCardActions>
+                <MButton Loading="_isLoading" OnClick="() => Submit(context)">
+                    @T(IsEdit ? "Edit" : "Add")
+                </MButton>
+            </MCardActions>
+        </MForm>
     </MCardText>
-    <MForm @ref="_form" Model="FormData" EnableI18n EnableValidation>
-        <MRow>
-            <MCol Cols="12">
-                <MTextField @bind-Value="FormData.Name" Label="@T("Paper.Name")"></MTextField>
-            </MCol>
-            <MCol Cols="12">
-                <MTextField @bind-Value="FormData.PhoneNumber"></MTextField>
-            </MCol>
-        </MRow>
-        <MRow>
-            <MButton Loading="IsLoading" OnClick="() => Submit(context)"></MButton>
-        </MRow>
-    </MForm>
-</MRow>
+</MCard>
 
 @code {
 
@@ -35,22 +166,51 @@
     private IPaperAppService PaperAppService { get; set; } = null!;
 
     [Inject]
+    private IWorkerAppService WorkerAppService { get; set; } = null!;
+
+    [Inject]
     private IPopupService PopupService { get; set; } = null!;
 
 
     private bool IsEdit => Id != null;
 
-    private bool IsLoading { get; set; } = false;
+    private bool _isLoading = false;
+
+    private bool _isAutoCompleteLoading = false;
 
     private MForm _form = null!;
 
     private CreateUpdatePaperDto FormData { get; set; } = new();
 
+    private List<WorkerDto> _workerList = new();
+
+    private string _deviceType = string.Empty;
+    private string _systemType = string.Empty;
+
     protected override async Task OnParametersSetAsync()
     {
+        await InitializeAutoComplete();
         if (IsEdit)
         {
             FormData = (await PaperAppService.GetAsync(Id!.Value)).Adapt<CreateUpdatePaperDto>();
+            var split = FormData.ProblemType.Split(",");
+
+            if (split.Length == 2)
+            {
+                _systemType = split[0];
+                _deviceType = split[1];
+            }
+
+            if (FormData.WorkerId is not null)
+            {
+                var worker = await WorkerAppService.GetByWorkerIdAsync(FormData.WorkerId.Value);
+                _workerList.AddIfNotContains(worker);
+            }
+            if (FormData.Worker2Id is not null)
+            {
+                var worker = await WorkerAppService.GetByWorkerIdAsync(FormData.Worker2Id.Value);
+                _workerList.AddIfNotContains(worker);
+            }
         }
     }
 
@@ -58,7 +218,10 @@
     {
         if (!context.Validate()) return;
 
-        IsLoading = true;
+        _isLoading = true;
+
+        FormData.ProblemType = $"{_systemType},{_deviceType}";
+
         if (IsEdit)
         {
             await PaperAppService.UpdateAsync(Id!.Value, FormData);
@@ -67,9 +230,28 @@
         {
             await PaperAppService.CreateAsync(FormData);
         }
-        IsLoading = false;
+        _isLoading = false;
 
         await PopupService.EnqueueSnackbarAsync(IsEdit ? T("Paper.EditSuccess") : T("Paper.AddSuccess"), AlertTypes.Success);
+    }
+
+    private async Task UpdateSearchInputAsync(string arg)
+    {
+        await InitializeAutoComplete(arg);
+    }
+
+    private async Task InitializeAutoComplete(string? searchText = null)
+    {
+        _isAutoCompleteLoading = true;
+        var pagedResult = await WorkerAppService.GetListAsync(new PagedSortedAndFilteredResultRequestDto()
+        {
+            MaxResultCount = 50,
+            FilterField = searchText != null ? "WorkerId" : null,
+            FilterValue = searchText
+        });
+        _workerList = new List<WorkerDto>(pagedResult.Items);
+
+        _isAutoCompleteLoading = false;
     }
 
 }
