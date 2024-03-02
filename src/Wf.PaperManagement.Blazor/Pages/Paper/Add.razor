@@ -14,7 +14,7 @@
         @T(IsEdit ? "Paper.Edit" : "Paper.Add")
     </MCardTitle>
     <MCardText>
-        <MForm @ref="_form" Model="FormData" EnableI18n EnableValidation>
+        <MForm @ref="_form" Model="FormData" EnableI18n EnableValidation OnSubmit="HandleOnSubmit" OnInvalidSubmit="HandleOnInvalidSubmit">
             <MRow>
                 <MCol Cols="4">
                     <MTextField @bind-Value="FormData.Name" Label="@T("Paper.Name")"></MTextField>
@@ -62,76 +62,118 @@
                     <MRadioGroup
                         Required
                         Column
-                        Label="@T("Paper.DeviceType")"
-                        @bind-Value="_deviceType">
+                        Label="@T("Paper.SystemType")"
+                        @bind-Value="_systemType">
                         <MRadio
                             Label="win7"
                             Value="@("win7")">
                         </MRadio>
                         <MRadio
-                            Label="win8"
-                            Value="@("win8")">
-                        </MRadio>
-                        <MRadio
-                            Label="@T("Paper.DeviceType")"
+                            Label="win10/11"
                             Value="@("win10/11")">
                         </MRadio>
                         <MRadio
-                            Label="@T("Paper.DeviceType")"
+                            Label="Linux"
                             Value="@("Linux")">
                         </MRadio>
                         <MRadio
-                            Label="@T("Paper.DeviceType")"
+                            Label="MacOS"
                             Value="@("MacOS")">
                         </MRadio>
                         <MRadio
-                            Label="@T("Paper.DeviceType")"
+                            Label="Android"
                             Value="@("Android")">
+                        </MRadio>
+                        <MRadio
+                            Label="IOS"
+                            Value="@("IOS")">
                         </MRadio>
                     </MRadioGroup>
                 </MCol>
                 <MCol Cols="4">
                     <MRadioGroup
                         Column
+                        Label="@T("Paper.DeviceType")"
                         @bind-Value="_deviceType">
                         <MRadio
-                            Label="@T("Paper.DeviceType")"
+                            Label="@T("Paper.DeviceType.PC")"
                             Value="@("台式机")">
                         </MRadio>
                         <MRadio
-                            Label="@T("Paper.DeviceType")"
+                            Label="@T("Paper.DeviceType.Laptop")"
                             Value="@("笔记本")">
                         </MRadio>
                         <MRadio
-                            Label="@T("Paper.DeviceType")"
+                            Label="@T("Paper.DeviceType.Phone")"
                             Value="@("手机")">
+                        </MRadio>
+                        <MRadio Label="@T("Paper.DeviceType.Others")"
+                                Value="@("其他")">
                         </MRadio>
                     </MRadioGroup>
                 </MCol>
                 <MCol Cols="4">
-                    <MTextField
+                    <MTextarea
+                        Rows="7"
+                        Counter="true"
+                        Clearable
                         @bind-Value="FormData.ProblemDescription"
                         Label="@T("Paper.ProblemDescription")">
-                    </MTextField>
+                    </MTextarea>
                 </MCol>
             </MRow>
             <MRow>
-                <MCol Cols="6">
+                <MCol Cols="4">
                     <MTextField @bind-Value="FormData.Note" Label="@T("Paper.Note")"></MTextField>
                 </MCol>
-                <MCol Cols="6">
+                <MCol Cols="4">
                     <MRadioGroup Required Row @bind-Value="FormData.Status">
                         <MRadio Label="@T("Paper.Status.Processed")" Value="@PaperStatus.Processed"></MRadio>
                         <MRadio Label="@T("Paper.Status.UnProcessed")" Value="@PaperStatus.UnProcessed"></MRadio>
                         <MRadio Label="@T("Paper.Status.Deprecated")" Value="@PaperStatus.Deprecated"></MRadio>
                     </MRadioGroup>
                 </MCol>
+                <MCol Cols="4">
+                    <MAutocomplete
+                        Required
+                        Clearable
+                        TItem="WorkerDto"
+                        TValue="int"
+                        TItemValue="int"
+                        @bind-Value="FormData.ReceiverId"
+                        Label='@T("Paper.Receiver")'
+                        OnSearchInputUpdate="UpdateSearchInputAsync"
+                        Items="_workerList"
+                        ItemText='dto => $"{dto.WorkerId}（{dto.Name}）"'
+                        ItemValue="dto => dto.WorkerId">
+                    </MAutocomplete>
+                </MCol>
             </MRow>
             <MRow>
                 <MCol Cols="8">
-                    <MTextField @bind-Value="FormData.Solution"></MTextField>
+                    <MTextarea
+                        Counter="true"
+                        Rows="7"
+                        Clearable
+                        @bind-Value="FormData.Solution"
+                        Label="@T("Paper.Solution")">
+                    </MTextarea>
                 </MCol>
                 <MCol Cols="4">
+                    <PDateTimePicker
+                        @bind-Value="FormData.ReceiveTime"
+                        TimeFormat="TimeFormat.Hr24"
+                        ViewType="DateTimePickerViewType.Auto">
+                        <ActivatorContent Context="ctx">
+                            <MTextField @bind-Value="FormData.ReceiveTime"
+                                        Label="@T("Paper.ReceiveTime")"
+                                        Clearable
+                                        Filled
+                                        Readonly
+                                        @attributes="@ctx.Attrs">
+                            </MTextField>
+                        </ActivatorContent>
+                    </PDateTimePicker>
                     <PDateTimePicker
                         @bind-Value="FormData.CompleteTime"
                         TimeFormat="TimeFormat.Hr24"
@@ -149,7 +191,7 @@
                 </MCol>
             </MRow>
             <MCardActions>
-                <MButton Loading="_isLoading" OnClick="() => Submit(context)">
+                <MButton Loading="_isLoading" Type="Submit">
                     @T(IsEdit ? "Edit" : "Add")
                 </MButton>
             </MCardActions>
@@ -159,17 +201,17 @@
 
 @code {
 
-    [Parameter]
-    public Guid? Id { get; set; }
+    [Parameter] public Guid? Id { get; set; }
 
-    [Inject]
-    private IPaperAppService PaperAppService { get; set; } = null!;
+    [Inject] private IPaperAppService PaperAppService { get; set; } = null!;
 
-    [Inject]
-    private IWorkerAppService WorkerAppService { get; set; } = null!;
+    [Inject] private IWorkerAppService WorkerAppService { get; set; } = null!;
 
-    [Inject]
-    private IPopupService PopupService { get; set; } = null!;
+    [Inject] private IPopupService PopupService { get; set; } = null!;
+
+    [Inject] private NavigationManager NavigationManager { get; set; } = null!;
+
+    [Inject] private IJSRuntime JsRuntime { get; set; } = null!;
 
 
     private bool IsEdit => Id != null;
@@ -206,6 +248,7 @@
                 var worker = await WorkerAppService.GetByWorkerIdAsync(FormData.WorkerId.Value);
                 _workerList.AddIfNotContains(worker);
             }
+
             if (FormData.Worker2Id is not null)
             {
                 var worker = await WorkerAppService.GetByWorkerIdAsync(FormData.Worker2Id.Value);
@@ -214,25 +257,32 @@
         }
     }
 
-    private async Task Submit(FormContext context)
+    private async Task HandleOnSubmit()
     {
-        if (!context.Validate()) return;
-
-        _isLoading = true;
-
         FormData.ProblemType = $"{_systemType},{_deviceType}";
 
+        if (!_form.Validate()) return;
+
+        _isLoading = true;
         if (IsEdit)
         {
             await PaperAppService.UpdateAsync(Id!.Value, FormData);
+            await PopupService.EnqueueSnackbarAsync(T("Paper.EditSuccess"), AlertTypes.Success);
+            await JsRuntime.InvokeVoidAsync("history.back");
         }
         else
         {
             await PaperAppService.CreateAsync(FormData);
+            await PopupService.EnqueueSnackbarAsync(T("Paper.AddSuccess"), AlertTypes.Success);
+            FormData = new CreateUpdatePaperDto();
         }
-        _isLoading = false;
 
-        await PopupService.EnqueueSnackbarAsync(IsEdit ? T("Paper.EditSuccess") : T("Paper.AddSuccess"), AlertTypes.Success);
+        _isLoading = false;
+    }
+
+    private void HandleOnInvalidSubmit()
+    {
+        Logger.LogInformation("Invalid submit");
     }
 
     private async Task UpdateSearchInputAsync(string arg)
@@ -253,5 +303,7 @@
 
         _isAutoCompleteLoading = false;
     }
+
+    [Inject] private ILogger<Add> Logger { get; set; } = null!;
 
 }

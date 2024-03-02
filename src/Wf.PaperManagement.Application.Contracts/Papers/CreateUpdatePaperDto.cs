@@ -8,7 +8,6 @@ namespace Wf.PaperManagement.Papers;
 /// </summary>
 public class CreateUpdatePaperDto
 {
-
     /// <summary>
     /// 客户姓名
     /// </summary>
@@ -75,7 +74,7 @@ public class CreateUpdatePaperDto
     /// 拿单时间
     /// </summary>
     [Required]
-    public DateTime ReceiveTime { get; set; }
+    public DateTime ReceiveTime { get; set; } = DateTime.Now;
 
     /// <summary>
     /// 还单时间
