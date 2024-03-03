@@ -1,12 +1,4 @@
 {
-  "iisSettings": {
-    "windowsAuthentication": false,
-    "anonymousAuthentication": true,
-    "iisExpress": {
-      "applicationUrl": "https://localhost:44344",
-      "sslPort": 44344
-    }
-  },
   "profiles": {
     "IIS Express": {
       "commandName": "IISExpress",
@@ -18,14 +10,32 @@
     "Wf.PaperManagement.HttpApi.Host": {
       "commandName": "Project",
       "launchBrowser": true,
-      "applicationUrl": "https://localhost:44344",
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Development",
-        "COMPLUS_ZapDisable": "1",
-        "COMPLUS_JitMinOpts": "1",
-        "COMPlus_TieredCompilation": "0",
-        "COMPLUS_ReadyToRun": "0"
-      }
+        "ASPNETCORE_ENVIRONMENT": "Development"
+//        "COMPLUS_ZapDisable": "1",
+//        "COMPLUS_JitMinOpts": "1",
+//        "COMPlus_TieredCompilation": "0",
+//        "COMPLUS_ReadyToRun": "0"
+      },
+      "applicationUrl": "https://localhost:44344"
+    },
+    "Container (Dockerfile)": {
+      "commandName": "Docker",
+      "launchBrowser": true,
+      "launchUrl": "{Scheme}://{ServiceHost}:{ServicePort}",
+      "environmentVariables": {
+        "ASPNETCORE_URLS": "https://+:443;http://+:80"
+      },
+      "publishAllPorts": true,
+      "useSSL": true
+    }
+  },
+  "iisSettings": {
+    "windowsAuthentication": false,
+    "anonymousAuthentication": true,
+    "iisExpress": {
+      "applicationUrl": "https://localhost:44344",
+      "sslPort": 44344
     }
   }
 }

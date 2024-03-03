@@ -17,10 +17,10 @@
         <MForm @ref="_form" Model="FormData" EnableI18n EnableValidation OnSubmit="HandleOnSubmit" OnInvalidSubmit="HandleOnInvalidSubmit">
             <MRow>
                 <MCol Cols="4">
-                    <MTextField @bind-Value="FormData.Name" Label="@T("Paper.Name")"></MTextField>
+                    <MTextField Required Outlined @bind-Value="FormData.Name" Label="@T("Paper.Name")"></MTextField>
                 </MCol>
                 <MCol Cols="4">
-                    <MTextField @bind-Value="FormData.PhoneNumber" Label='@T("Paper.PhoneNumber")'></MTextField>
+                    <MTextField Required Outlined @bind-Value="FormData.PhoneNumber" Label='@T("Paper.PhoneNumber")'></MTextField>
                 </MCol>
                 <MCol Cols="4">
                     <MAutocomplete
@@ -40,7 +40,7 @@
             </MRow>
             <MRow>
                 <MCol Cols="8">
-                    <MTextField @bind-Value="FormData.Address" Label='@T("Paper.Address")'></MTextField>
+                    <MTextField Required Outlined @bind-Value="FormData.Address" Label='@T("Paper.Address")'></MTextField>
                 </MCol>
                 <MCol Cols="4">
                     <MAutocomplete
@@ -92,6 +92,7 @@
                 </MCol>
                 <MCol Cols="4">
                     <MRadioGroup
+                        Required
                         Column
                         Label="@T("Paper.DeviceType")"
                         @bind-Value="_deviceType">
@@ -114,6 +115,8 @@
                 </MCol>
                 <MCol Cols="4">
                     <MTextarea
+                        Required
+                        Outlined
                         Rows="7"
                         Counter="true"
                         Clearable
@@ -124,7 +127,7 @@
             </MRow>
             <MRow>
                 <MCol Cols="4">
-                    <MTextField @bind-Value="FormData.Note" Label="@T("Paper.Note")"></MTextField>
+                    <MTextField Required Outlined @bind-Value="FormData.Note" Label="@T("Paper.Note")"></MTextField>
                 </MCol>
                 <MCol Cols="4">
                     <MRadioGroup Required Row @bind-Value="FormData.Status">
@@ -136,6 +139,7 @@
                 <MCol Cols="4">
                     <MAutocomplete
                         Required
+                        Outlined
                         Clearable
                         TItem="WorkerDto"
                         TValue="int"
@@ -152,6 +156,7 @@
             <MRow>
                 <MCol Cols="8">
                     <MTextarea
+                        Outlined
                         Counter="true"
                         Rows="7"
                         Clearable

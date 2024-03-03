@@ -6,6 +6,10 @@
     <TargetFramework>net8.0</TargetFramework>
     <Nullable>enable</Nullable>
     <BlazorWebAssemblyLoadAllGlobalizationData>true</BlazorWebAssemblyLoadAllGlobalizationData>
+<!--    https://github.com/dotnet/runtime/issues/97634-->
+<!--     https://github.com/emscripten-core/emscripten/issues/13277-->
+    <EmccInitialHeapSize>24903680</EmccInitialHeapSize>
+    <RunAOTCompilation>true</RunAOTCompilation>
   </PropertyGroup>
 
   <ItemGroup>
