@@ -1,0 +1,188 @@
+@page "/app/worker/list"
+@using Wf.PaperManagement.Common
+@using Volo.Abp.Users
+@using Wf.PaperManagement.Workers
+@inherits ProComponentBase
+@inject NavigationManager NavigationManager
+@inject ICurrentUser CurrentUser
+
+<MDataTable Headers="_headers"
+            Items="Workers"
+            ItemKey="p => p.UserId.ToString()"
+            Loading="_loading"
+            OnOptionsUpdate="HandleOptionsUpdate"
+            ServerItemsLength="_totalCount">
+    <TopContent>
+        <MToolbar Flat>
+            <MToolbarTitle>@T("Paper")</MToolbarTitle>
+            <MSpacer/>
+            <MSelect Style="margin: 20px 10px 10px;"
+                     Items="_filterFieldSelects"
+                     ItemText="f => f.Text"
+                     ItemValue="f => f.Value"
+                     Label="@T("FilterField")"
+                     @bind-Value="_filterField">
+            </MSelect>
+            <MTextField @bind-Value="_filterValue" OnKeyDown="OnEnterKeyDown" Label="@T("FilterValue")"></MTextField>
+            <MSpacer/>
+            <MButton Color="Color.Primary"
+                     OnClick='ShowAddModal'>
+                <MIcon>mdi-plus</MIcon>
+                <MText>@T("Worker.Add")</MText>
+            </MButton>
+        </MToolbar>
+    </TopContent>
+    <ItemColContent>
+        @switch (context.Header.Value)
+        {
+            case "actions":
+                <MIcon Small Show=@CurrentUser.IsInRole("admin")
+                       Class="mr-2"
+                       OnClick='() => EditWorker(context.Item)'>
+                    mdi-pencil
+                </MIcon>
+                <MIcon Small Show=@CurrentUser.IsInRole("admin")
+                       OnClick="() => DeleteWorker(context.Item)">
+                    mdi-delete
+                </MIcon>
+                break;
+            default:
+                @context.Value
+                break;
+        }
+    </ItemColContent>
+</MDataTable>
+<Edit @bind-Value="_showModal" Worker="_worker"/>
+
+@code {
+
+    private class FilterOptions
+    {
+        public string Text { get; set; } = "";
+        public string Value { get; set; } = "";
+    }
+
+    private bool _loading = false;
+
+    public List<WorkerDto> Workers { get; set; } = null!;
+    private int _totalCount;
+
+    private int _page = 1;
+    private int _pageSize = 10;
+    private string? _sorting;
+
+    [Inject] private IWorkerAppService WorkerService { get; set; } = null!;
+
+    [Inject] private IPopupService PopupService { get; set; } = null!;
+
+    private List<DataTableHeader<WorkerDto>> _headers = new();
+
+    private List<FilterOptions> _filterFieldSelects = new();
+    private string? _filterField;
+    private string? _filterValue;
+
+    protected override void OnParametersSet()
+    {
+        _headers = new List<DataTableHeader<WorkerDto>>
+        {
+            new()
+            {
+                Text = T("Worker.Name"),
+                Sortable = false,
+                Value = nameof(WorkerDto.Name)
+            },
+            new()
+            {
+                Text = T("Worker.WorkerId"),
+                Value = nameof(WorkerDto.WorkerId)
+            },
+            new()
+            {
+                Text = T("Worker.UserId"),
+                Value = nameof(WorkerDto.UserId)
+            },
+            new()
+            {
+                Text = T("Actions"),
+                Value = "actions"
+            }
+        };
+        _filterFieldSelects = new List<FilterOptions>
+        {
+            new()
+            {
+                Text = T("Worker.Name"),
+                Value = nameof(WorkerDto.Name)
+            },
+            new()
+            {
+                Text = T("Worker.WorkerId"),
+                Value = nameof(WorkerDto.WorkerId)
+            }
+        };
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+
+        await InitializeAsync();
+    }
+
+    private async Task InitializeAsync(int page = 1, int pageSize = 10, string? sorting = null, string? filterField = null, string? filterValue = null)
+    {
+        _loading = true;
+        var pagedData = await WorkerService.GetListAsync(new PagedSortedAndFilteredResultRequestDto()
+        {
+            MaxResultCount = pageSize,
+            SkipCount = (page - 1) * pageSize,
+            Sorting = sorting,
+            FilterField = filterField,
+            FilterValue = filterValue,
+        });
+        _totalCount = (int)pagedData.TotalCount;
+        Workers = [..pagedData.Items];
+        _loading = false;
+    }
+
+    private async Task HandleOptionsUpdate(DataOptions options)
+    {
+        _page = options.Page;
+        _pageSize = options.ItemsPerPage;
+        _sorting = options.SortBy[0] + " " + (options.SortDesc[0] ? "desc" : "asc");
+
+        await InitializeAsync(_page, _pageSize, _sorting, _filterField, _filterValue);
+    }
+
+    private async Task OnEnterKeyDown(KeyboardEventArgs args)
+    {
+        if (args.Key != "Enter")
+        {
+            return;
+        }
+
+        await InitializeAsync(_page, _pageSize, _sorting, _filterField, _filterValue);
+    }
+
+    private Task DeleteWorker(WorkerDto workerDto)
+    {
+        return Task.CompletedTask;
+    }
+
+
+    private bool _showModal;
+    private WorkerDto? _worker;
+
+    private void ShowAddModal()
+    {
+        _worker = null;
+        _showModal = true;
+    }
+
+    private void EditWorker(WorkerDto workerDto)
+    {
+        _worker = workerDto;
+        _showModal = true;
+    }
+
+}

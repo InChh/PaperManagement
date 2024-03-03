@@ -1,0 +1,110 @@
+@using Wf.PaperManagement.Workers
+@using Wf.PaperManagement.Common
+@using Wf.PaperManagement.Users
+@inherits ProComponentBase
+
+<PModal
+    MaxWidth="600"
+    Value="Value"
+    ValueChanged="ValueChanged"
+    OnSave="HandleOnSave"
+    OnCancel="HandleOnCancel"
+    FormModel="Worker"
+    Title="@(_isEdit ? T("Worker.Edit") : T("Worker.Add"))">
+    <MRow>
+        @if (!_isEdit)
+        {
+            <MCol Cols="12">
+                <MAutocomplete
+                    Required
+                    @bind-Value="Worker!.UserId"
+                    Label=@T("Worker.Username")
+                    OnSearchInputUpdate="UpdateSearchInputAsync"
+                    Items="_userList"
+                    ItemText="dto => dto.Username"
+                    ItemValue="dto => Guid.Parse(dto.Id)">
+                </MAutocomplete>
+            </MCol>
+        }
+        <MCol Cols="12">
+            <MTextField
+                Required
+                @bind-Value="Worker!.Name"
+                Label=@T("Worker.Name")
+                Dense
+                Outlined
+                HideDetails="@("auto")"/>
+        </MCol>
+
+    </MRow>
+</PModal>
+
+@code {
+
+    [Parameter] public WorkerDto? Worker { get; set; }
+    [Parameter] public bool Value { get; set; }
+    [Parameter] public EventCallback<bool> ValueChanged { get; set; }
+    private bool _isEdit;
+    private Exception? _exception;
+    private bool _isAutoCompleteLoading;
+    private List<UserDto> _userList = [];
+
+    [Inject] public IUserAppService UserAppService { get; set; } = null!;
+    [Inject] public IWorkerAppService WorkerAppService { get; set; } = null!;
+
+    protected override async Task OnParametersSetAsync()
+    {
+        if (Worker is null)
+        {
+            Worker = new WorkerDto();
+            _isEdit = false;
+        }
+        else
+        {
+            _isEdit = true;
+        }
+
+        await InitializeAutoComplete();
+    }
+
+    private async Task HandleOnSave(ModalActionEventArgs args)
+    {
+        
+        if (_isEdit)
+        {
+            await WorkerAppService.UpdateAsync(Worker!.UserId, new UpdateWorkerDto { Name = Worker.Name });
+        }
+        else
+        {
+            await WorkerAppService.CreateAsync(new CreateWorkerDto { UserId = Worker!.UserId, Name = Worker.Name, WorkerId = Worker.WorkerId });
+        }
+
+        Value = false;
+    }
+
+    private void HandleOnCancel()
+    {
+        Value = false;
+        _exception = null;
+    }
+
+    private async Task UpdateSearchInputAsync(string arg)
+    {
+        await InitializeAutoComplete(arg);
+    }
+
+    private async Task InitializeAutoComplete(string? searchText = null)
+    {
+        _isAutoCompleteLoading = true;
+        var pagedResult = await UserAppService.GetListAsync(new PagedSortedAndFilteredResultRequestDto()
+        {
+            MaxResultCount = 50,
+            FilterField = searchText != null ? "Username" : null,
+            FilterValue = searchText
+        });
+        _userList = [..pagedResult.Items];
+
+        _isAutoCompleteLoading = false;
+    }
+
+}
