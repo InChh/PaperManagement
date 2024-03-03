@@ -38,7 +38,7 @@
     "Children": [
       {
         "Id": 7,
-        "Title": "List",
+        "Title": "Worker.List",
         "Icon": "mdi-circle",
         "Href": "app/worker/list"
       }
@@ -51,7 +51,7 @@
     "Children": [
       {
         "Id": 9,
-        "Title": "List",
+        "Title": "User.List",
         "Icon": "mdi-circle",
         "Href": "app/user/list"
       }

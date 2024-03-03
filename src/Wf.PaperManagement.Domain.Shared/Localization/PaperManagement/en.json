@@ -1,6 +1,7 @@
 {
   "culture": "en",
   "texts": {
-    "Pm.Error:CompleteTimeShouldLaterThanReceiveTime": "Complete time should later than receive time"
+    "Pm.Error:CompleteTimeShouldLaterThanReceiveTime": "Complete time should later than receive time",
+    "Pm.Error:WorkerIdAlreadyExists": "The worker id already exists"
   }
 }
