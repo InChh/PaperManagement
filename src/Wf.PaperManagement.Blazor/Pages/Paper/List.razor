@@ -16,25 +16,25 @@
             ItemKey="p => p.Id.ToString()"
             Loading="_loading"
             ShowExpand
-             OnOptionsUpdate="HandleOptionsUpdate"
-             ServerItemsLength="_totalCount">
-     <TopContent>
-         <MToolbar Flat>
+            OnOptionsUpdate="HandleOptionsUpdate"
+            ServerItemsLength="_totalCount">
+    <TopContent>
+        <MToolbar Flat>
             <MToolbarTitle>@T("Paper")</MToolbarTitle>
-                <MSpacer />
-                <MSelect Style="margin: 20px 10px 10px;"
-                         Items="_filterFieldSelects"
-                         ItemText="f => f.Text"
-                         ItemValue="f => f.Value"
-                         Label="@T("FilterField")"
-                         @bind-Value="_filterField">
-                </MSelect>
-                <MTextField @bind-Value="_filterValue" OnKeyDown="OnEnterKeyDown" Label="@T("FilterValue")"></MTextField>
-                <MSpacer />
-                <MButton Color="Color.Primary"
-                         OnClick='() => NavigationManager.NavigateTo("/app/paper/add")'>
-                    <MIcon>mdi-plus</MIcon>
-                    <MText>@T("Paper.Add")</MText>
+            <MSpacer/>
+            <MSelect Style="margin: 20px 10px 10px;"
+                     Items="_filterFieldSelects"
+                     ItemText="f => f.Text"
+                     ItemValue="f => f.Value"
+                     Label="@T("FilterField")"
+                     @bind-Value="_filterField">
+            </MSelect>
+            <MTextField @bind-Value="_filterValue" OnKeyDown="OnEnterKeyDown" Label="@T("FilterValue")"></MTextField>
+            <MSpacer/>
+            <MButton Color="Color.Primary"
+                     OnClick='() => NavigationManager.NavigateTo("/app/paper/add")'>
+                <MIcon>mdi-plus</MIcon>
+                <MText>@T("Paper.Add")</MText>
             </MButton>
         </MToolbar>
     </TopContent>
@@ -43,48 +43,51 @@
         {
             case "actions":
                 <MIcon Small Show=@CurrentUser.IsInRole("worker")
-                        Class="mr-2"
-                        OnClick='() => NavigationManager.NavigateTo("/app/paper/edit/" + context.Item.Id)'>
-                     mdi-pencil
-                 </MIcon>
+                       Class="mr-2"
+                       OnClick='() => NavigationManager.NavigateTo("/app/paper/edit/" + context.Item.Id)'>
+                    mdi-pencil
+                </MIcon>
                 <MIcon Small Show=@CurrentUser.IsInRole("admin")
-                        OnClick="() => DeletePaper(context.Item)">
-                     mdi-delete
-                 </MIcon>
+                       OnClick="() => DeletePaper(context.Item)">
+                    mdi-delete
+                </MIcon>
                 break;
             case nameof(PaperDto.Status):
+            {
+                if (context.Value is PaperStatus status)
                 {
-                    if (context.Value is PaperStatus status)
+                    switch (status)
                     {
-                        switch (status)
-                        {
-                            case PaperStatus.Processed:
-                                <MChip Color="green">@T("Paper.Status.Processed")</MChip>
-                                break;
-                            case PaperStatus.UnProcessed:
-                                <MChip Color="red">@T("Paper.Status.Unprocessed")</MChip>
-                                break;
-                            case PaperStatus.Deprecated:
-                                <MChip>@T("Paper.Status.Deprecated")</MChip>
-                                break;
-                            default:
-                                throw new ArgumentOutOfRangeException();
-                        }
+                        case PaperStatus.Processed:
+                            <MChip Color="green">@T("Paper.Status.Processed")</MChip>
+                            break;
+                        case PaperStatus.UnProcessed:
+                            <MChip Color="red">@T("Paper.Status.Unprocessed")</MChip>
+                            break;
+                        case PaperStatus.Deprecated:
+                            <MChip>@T("Paper.Status.Deprecated")</MChip>
+                            break;
+                        default:
+                            throw new ArgumentOutOfRangeException();
                     }
-                    break;
                 }
+
+                break;
+            }
             case nameof(PaperDto.WorkerId):
+            {
+                if (context.Item.WorkerId.HasValue)
                 {
-                    if (context.Item.WorkerId.HasValue)
-                    {
-                        <MChip Color="green">@context.Item.WorkerId (@context.Item.WorkerName)</MChip>
-                    }
-                    if (context.Item.Worker2Id.HasValue)
-                    {
-                        <MChip Color="green">@context.Item.Worker2Id (@context.Item.Worker2Name)</MChip>
-                    }
-                    break;
+                    <MChip Color="green">@context.Item.WorkerId (@context.Item.WorkerName)</MChip>
                 }
+
+                if (context.Item.Worker2Id.HasValue)
+                {
+                    <MChip Color="green">@context.Item.Worker2Id (@context.Item.Worker2Name)</MChip>
+                }
+
+                break;
+            }
             default:
                 @context.Value
                 break;
@@ -92,7 +95,7 @@
     </ItemColContent>
     <ExpandedItemContent>
         <td colspan="@_headers.Count">
-@*             <MCol Class="flex-grow-1" Style="min-width:100px">
+            @*             <MCol Class="flex-grow-1" Style="min-width:100px">
                 <MLabel Value>@T("Paper.Address"):</MLabel>
                     <br />
                     @context.Item.Address
@@ -112,7 +115,8 @@
                     <br />
                     @context.Item.CompleteTime
             </MCol>
- *@            <MDescriptions Style="margin: 10px">
+ *@
+            <MDescriptions Style="margin: 10px">
                 <MDescriptionsItem Label='@T("Paper.Address")'>
                     @context.Item.Address
                 </MDescriptionsItem>
@@ -147,11 +151,9 @@
     private int _pageSize = 10;
     private string? _sorting;
 
-    [Inject]
-    private IPaperAppService PaperService { get; set; } = null!;
+    [Inject] private IPaperAppService PaperService { get; set; } = null!;
 
-    [Inject]
-    private IPopupService PopupService { get; set; } = null!;
+    [Inject] private IPopupService PopupService { get; set; } = null!;
 
     private List<DataTableHeader<PaperDto>> _headers = new();
 
@@ -243,13 +245,13 @@
     {
         _loading = true;
         var pagedData = await PaperService.GetListAsync(new PagedSortedAndFilteredResultRequestDto()
-            {
-                MaxResultCount = pageSize,
-                SkipCount = page * pageSize,
-                Sorting = sorting,
-                FilterField = filterField,
-                FilterValue = filterValue,
-            });
+        {
+            MaxResultCount = pageSize,
+            SkipCount = (page - 1) * pageSize,
+            Sorting = sorting,
+            FilterField = filterField,
+            FilterValue = filterValue,
+        });
         _totalCount = (int)pagedData.TotalCount;
         Papers = new List<PaperDto>(pagedData.Items);
         _loading = false;
@@ -280,6 +282,7 @@
         {
             return;
         }
+
         await InitializeAsync(_page, _pageSize, _sorting, _filterField, _filterValue);
     }
 
