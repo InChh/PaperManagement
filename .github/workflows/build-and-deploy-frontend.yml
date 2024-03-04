@@ -93,7 +93,13 @@ jobs:
           SOURCE: "./"
           # 目标目录
           TARGET: '/home/wangfu/wangfu_paper_web'
-          SCRIPT_BEFORE: cp /home/wangfu/wangfu_paper_web/appsettings.json ..
+          SCRIPT_BEFORE: |
+            whoami
+            ls -al
+            cp /home/wangfu/wangfu_paper_web/appsettings.json ..
           SCRIPT_BEFORE_REQUIRED: "true"
-          SCRIPT_AFTER: cp /home/wangfu/appsettings.json /home/wangfu/wangfu_paper_web
+          SCRIPT_AFTER: |
+            whoami
+            ls -al
+            cp /home/wangfu/appsettings.json /home/wangfu/wangfu_paper_web
           SCRIPT_AFTER_REQUIRED: "true"
