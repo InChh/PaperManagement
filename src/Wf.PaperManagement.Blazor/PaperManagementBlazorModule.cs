@@ -68,7 +68,6 @@ public class PaperManagementBlazorModule : AbpModule
     private static void ConfigureUI(WebAssemblyHostBuilder builder)
     {
         builder.RootComponents.Add<App>("#ApplicationContainer");
-        builder.RootComponents.Add<HeadOutlet>("head::after");
     }
 
     private static void ConfigureHttpClient(ServiceConfigurationContext context,
