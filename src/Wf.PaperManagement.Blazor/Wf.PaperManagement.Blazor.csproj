@@ -8,21 +8,21 @@
     <BlazorWebAssemblyLoadAllGlobalizationData>true</BlazorWebAssemblyLoadAllGlobalizationData>
 <!--    https://github.com/dotnet/runtime/issues/97634-->
 <!--     https://github.com/emscripten-core/emscripten/issues/13277-->
-    <EmccInitialHeapSize>24903680</EmccInitialHeapSize>
+<!--    <EmccInitialHeapSize>24903680</EmccInitialHeapSize>-->
     <RunAOTCompilation>true</RunAOTCompilation>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="Mapster" Version="7.4.0" />
-    <PackageReference Include="Masa.Blazor" Version="1.2.2" />
-    <PackageReference Include="Microsoft.AspNetCore.Components.Authorization" Version="8.0.0" />
-    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="8.0.0" />
-    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="8.0.0" />
-    <PackageReference Include="Volo.Abp.Http.Client.IdentityModel.WebAssembly" Version="7.4.2" />
+    <PackageReference Include="Masa.Blazor" Version="1.3.4" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.Authorization" Version="8.0.2" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="8.0.2" />
+    <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="8.0.2" />
+    <PackageReference Include="Volo.Abp.Http.Client.IdentityModel.WebAssembly" Version="8.0.4" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Volo.Abp.Autofac.WebAssembly" Version="7.4.2" />
+    <PackageReference Include="Volo.Abp.Autofac.WebAssembly" Version="8.0.4" />
   </ItemGroup>
 
   <ItemGroup>
