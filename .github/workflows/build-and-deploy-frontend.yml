@@ -32,7 +32,7 @@ permissions:
   contents: read
 
 jobs:
-  build-and-deploy:
+  build:
     runs-on: ubuntu-latest
 
     steps:
@@ -69,6 +69,18 @@ jobs:
           name: wwwroot
           path: ${{env.DOTNET_ROOT}}/app/wwwroot
 
+  deploy:
+    runs-on: ubuntu-latest 
+    steps:
+      - name: Download artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: wwwroot
+
+      - name: Display structure of downloaded files
+        run: ls -R
+
+
       - name: Deploy to server
         uses: easingthemes/ssh-deploy@v2.1.1
         env:
@@ -81,7 +93,7 @@ jobs:
           # 服务器用户名
           REMOTE_USER: "wangfu"
           # 源目录
-          SOURCE: ${{env.DOTNET_ROOT}}/app/wwwroot
+          SOURCE: wwwroot
           # 目标目录
           TARGET: '/home/wangfu/wangfu_paper_web'
           SCRIPT_BEFORE: "mv /home/wangfu/wangfu_paper_web/appsettings.json .."
