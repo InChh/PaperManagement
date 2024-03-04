@@ -43,6 +43,8 @@ jobs:
         with:
           dotnet-version: ${{ env.DOTNET_VERSION }}
 
+
+
       - name: Set up dependency caching for faster builds
         uses: actions/cache@v3
         with:
@@ -50,7 +52,10 @@ jobs:
           key: ${{ runner.os }}-nuget-${{ hashFiles('**/packages.lock.json') }}
           restore-keys: |
             ${{ runner.os }}-nuget-
-
+          
+      - name: Restore workload
+        run: dotnet workload restore
+        
       - name: Build with dotnet
         run: dotnet build src/Wf.PaperManagement.Blazor --configuration Release
 
