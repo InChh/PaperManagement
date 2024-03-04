@@ -54,8 +54,8 @@ jobs:
             ${{ runner.os }}-nuget-
           
       - name: Restore workload
-        run: dotnet workload restore
-        
+        run: dotnet workload restore src/Wf.PaperManagement.Blazor
+
       - name: Build with dotnet
         run: dotnet build src/Wf.PaperManagement.Blazor --configuration Release
 
