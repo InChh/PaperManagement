@@ -90,6 +90,7 @@ jobs:
           REMOTE_HOST: ${{ secrets.HOST }}
           # 服务器用户名
           REMOTE_USER: "wangfu"
+          SOURCE: "./"
           # 目标目录
           TARGET: '/home/wangfu/wangfu_paper_web'
           SCRIPT_BEFORE: "mv /home/wangfu/wangfu_paper_web/appsettings.json .."
