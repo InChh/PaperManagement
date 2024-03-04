@@ -56,40 +56,35 @@ jobs:
       - name: Restore workload
         run: dotnet workload restore 
         working-directory: src/Wf.PaperManagement.Blazor
-        
+
       - name: Build with dotnet
         run: dotnet build src/Wf.PaperManagement.Blazor --configuration Release
 
       - name: dotnet publish
         run: dotnet publish src/Wf.PaperManagement.Blazor -c Release -o ${{env.DOTNET_ROOT}}/app
 
-      - name: Upload artifact for deployment job
-        uses: actions/upload-artifact@v3
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
         with:
-          name: .net-app
-          path: ${{env.DOTNET_ROOT}}/app
+          name: wwwroot
+          path: ${{env.DOTNET_ROOT}}/app/wwwroot
 
-  deploy:
-    runs-on: ubuntu-latest
-    needs: build
-    steps:
-      - name: deploy to server
+      - name: Deploy to server
         uses: easingthemes/ssh-deploy@v2.1.1
         env:
           # 本地.ssh文件下的私钥id_rsa，存在secrets的PRIVATE_KEY中
           SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
           # 复制操作的参数。"-avzr --delete"意味部署时清空服务器目标目录下的文件
           ARGS: "-avzr --delete" 
-          # 源目录，相对于$GITHUB_WORKSPACE根目录的路径
-          SOURCE: ${{env.DOTNET_ROOT}}/app
           # 服务器域名/IP
           REMOTE_HOST: ${{ secrets.HOST }}
           # 服务器用户名
           REMOTE_USER: "wangfu"
+          # 源目录
+          SOURCE: ${{env.DOTNET_ROOT}}/app/wwwroot
           # 目标目录
           TARGET: '/home/wangfu/wangfu_paper_web'
           SCRIPT_BEFORE: "mv /home/wangfu/wangfu_paper_web/appsettings.json .."
           SCRIPT_BEFORE_REQUIRED: "true"
           SCRIPT_AFTER: "mv /home/wangfu/appsettings.json /home/wangfu/wangfu_paper_web"
           SCRIPT_AFTER_REQUIRED: "true"
-
