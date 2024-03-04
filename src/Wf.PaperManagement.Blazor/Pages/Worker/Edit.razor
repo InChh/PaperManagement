@@ -32,10 +32,18 @@
                 @bind-Value="Worker!.Name"
                 Label=@T("Worker.Name")
                 Dense
-                Outlined
-                HideDetails="@("auto")"/>
+                Outlined/>
         </MCol>
-
+        @if(!_isEdit){
+            <MCol Cols="12">
+                <MTextField
+                    Required
+                    @bind-Value="Worker!.WorkerId"
+                    Label=@T("Worker.WorkerId")
+                    Dense
+                    Outlined/>
+            </MCol>
+        }
     </MRow>
 </PModal>
 
