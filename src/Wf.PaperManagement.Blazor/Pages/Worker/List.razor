@@ -16,14 +16,25 @@
         <MToolbar Flat>
             <MToolbarTitle>@T("Paper")</MToolbarTitle>
             <MSpacer/>
-            <MSelect Style="margin: 20px 10px 10px;"
-                     Items="_filterFieldSelects"
-                     ItemText="f => f.Text"
-                     ItemValue="f => f.Value"
-                     Label="@T("FilterField")"
-                     @bind-Value="_filterField">
-            </MSelect>
-            <MTextField @bind-Value="_filterValue" OnKeyDown="OnEnterKeyDown" Label="@T("FilterValue")"></MTextField>
+            <MSelect
+                Style="margin-top: 30px"
+                Outlined
+                Items="_filterFieldSelects"
+                ItemText="f => f.Text"
+                ItemValue="f => f.Value"
+                Label="@T("FilterField")"
+                @bind-Value="_filterField"/>
+            <MTextField
+                Style="margin-top: 30px; margin-left: 10px"
+                Outlined
+                @bind-Value="_filterValue"
+                OnKeyDown="OnEnterKeyDown"
+                Label="@T("FilterValue")"/>
+            <MButton
+                Style="margin-left: 10px"
+                OnClick="HandleRefresh">
+                <MIcon>mdi-refresh</MIcon>
+            </MButton>
             <MSpacer/>
             <MButton Color="Color.Primary"
                      OnClick='ShowAddModal'>
@@ -52,7 +63,7 @@
         }
     </ItemColContent>
 </MDataTable>
-<Edit @bind-Value="_showModal" Worker="_worker"/>
+<Edit @bind-Value="_showModal" Worker="_worker" OnSave="HandleOnSave"/>
 
 @code {
 
@@ -183,6 +194,16 @@
     {
         _worker = workerDto;
         _showModal = true;
+    }
+
+    private async Task HandleOnSave()
+    {
+        await InitializeAsync(_page, _pageSize, _sorting, _filterField, _filterValue);
+    }
+
+    private async Task HandleRefresh()
+    {
+        await InitializeAsync(_page, _pageSize, _sorting, _filterField, _filterValue);
     }
 
 }
