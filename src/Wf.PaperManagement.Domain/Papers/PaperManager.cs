@@ -52,6 +52,11 @@ public class PaperManager : DomainService
         {
             paper.Worker = await _workerRepository.GetByWorkerId(workerId.Value);
         }
+        else
+        {
+            paper.Worker = null;
+            paper.WorkerId = null;
+        }
     }
 
     public async Task SetWorker2Async(Paper paper, int? worker2Id)
@@ -59,6 +64,11 @@ public class PaperManager : DomainService
         if (worker2Id is not null)
         {
             paper.Worker2 = await _workerRepository.GetByWorkerId(worker2Id.Value);
+        }
+        else
+        {
+            paper.Worker2 = null;
+            paper.Worker2Id = null;
         }
     }
 }
