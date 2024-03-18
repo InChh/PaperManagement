@@ -50,7 +50,7 @@ public class WorkerAppService : PaperManagementAppService, IWorkerAppService
         return new PagedResultDto<WorkerDto>(count, ObjectMapper.Map<List<Worker>, List<WorkerDto>>(workers));
     }
 
-    [Authorize(Roles = "admin")]
+    [Authorize(Roles = "leader")]
     public async Task<WorkerDto> CreateAsync(CreateWorkerDto input)
     {
         var worker = await _workerManager.CreateAsync(input.UserId, input.WorkerId,input.Name);
@@ -58,7 +58,7 @@ public class WorkerAppService : PaperManagementAppService, IWorkerAppService
         return ObjectMapper.Map<Worker, WorkerDto>(worker);
     }
 
-    [Authorize(Roles = "admin")]
+    [Authorize(Roles = "leader")]
     public async Task<WorkerDto> UpdateAsync(Guid userId, UpdateWorkerDto input)
     {
         var worker = await _workerRepository.GetByUserId(userId);
@@ -77,7 +77,7 @@ public class WorkerAppService : PaperManagementAppService, IWorkerAppService
         return ObjectMapper.Map<Worker, WorkerDto>(worker);
     }
 
-    [Authorize(Roles = "admin")]
+    [Authorize(Roles = "leader")]
     public async Task<WorkerDto> DeleteByWorkerIdAsync(int workerId)
     {
         var worker = await _workerRepository.GetByWorkerId(workerId);
@@ -85,7 +85,7 @@ public class WorkerAppService : PaperManagementAppService, IWorkerAppService
         return ObjectMapper.Map<Worker, WorkerDto>(worker);
     }
 
-    [Authorize(Roles = "admin")]
+    [Authorize(Roles = "leader")]
     public async Task<WorkerDto> DeleteByUserIdAsync(Guid userId)
     {
         var worker = await _workerRepository.GetByUserId(userId);
