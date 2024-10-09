@@ -2,6 +2,7 @@
   "culture": "zh-Hans",
   "texts": {
     "Pm.Error:CompleteTimeShouldLaterThanReceiveTime": "还单时间应晚于拿单时间",
-    "Pm.Error:WorkerIdAlreadyExists": "工号已存在"
+    "Pm.Error:WorkerIdAlreadyExists": "工号已存在",
+    "Pm.Error:TwoWorkersCannotBeTheSame": "两个出单队员不能相同"
   }
 }

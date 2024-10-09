@@ -2,6 +2,7 @@
   "culture": "en",
   "texts": {
     "Pm.Error:CompleteTimeShouldLaterThanReceiveTime": "Complete time should later than receive time",
-    "Pm.Error:WorkerIdAlreadyExists": "The worker id already exists"
+    "Pm.Error:WorkerIdAlreadyExists": "The worker id already exists",
+    "Pm.Error:TwoWorkersCannotBeTheSame": "两个出单队员不能相同"
   }
 }

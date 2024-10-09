@@ -5,6 +5,7 @@ using System.Linq.Dynamic.Core;
 using System.Threading.Tasks;
 using Wf.PaperManagement.Common;
 using Microsoft.AspNetCore.Authorization;
+using Volo.Abp;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.Domain.Repositories;
 using Volo.Abp.Validation;
@@ -82,6 +83,11 @@ public class PaperAppService : PaperManagementAppService, IPaperAppService
     [Authorize(Roles = "worker")]
     public async Task<PaperDto> CreateAsync(CreateUpdatePaperDto input)
     {
+        if (input.WorkerId == input.Worker2Id)
+        {
+            throw new BusinessException(PaperManagementDomainErrorCodes.TwoWorkersCannotBeTheSame);
+        }
+
         var paper = await _paperManager.CreateAsync(
             name: input.Name, phoneNumber: input.PhoneNumber, address: input.Address
             , problemType: input.ProblemType, problemDescription: input.ProblemDescription
@@ -107,8 +113,12 @@ public class PaperAppService : PaperManagementAppService, IPaperAppService
     [Authorize(Roles = "worker")]
     public async Task<PaperDto> UpdateAsync(Guid id, CreateUpdatePaperDto input)
     {
-        var paper = await _paperRepository.GetAsync(id);
+        if (input.WorkerId == input.Worker2Id)
+        {
+            throw new BusinessException(PaperManagementDomainErrorCodes.TwoWorkersCannotBeTheSame);
+        }
 
+        var paper = await _paperRepository.GetAsync(id);
         paper.SetName(input.Name);
         paper.SetAddress(input.Address);
         paper.SetPhoneNumber(input.PhoneNumber);
