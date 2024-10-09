@@ -2,10 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Keycloak.AuthServices.Sdk;
 using Keycloak.AuthServices.Sdk.Admin;
-using Keycloak.AuthServices.Sdk.Admin.Models;
 using Microsoft.Extensions.Options;
-using Refit;
 using Volo.Abp;
 using Volo.Abp.Domain.Repositories;
 using Volo.Abp.Domain.Services;
@@ -34,10 +33,11 @@ public class WorkerManager : DomainService
         Check.NotNullOrWhiteSpace(name, nameof(name), WorkerConsts.MaxNameLength);
 
         // 检查用户是否存在
-        _ = await _keycloakUserClient.GetUser(_keycloakOptions.Value.Realm, userId.ToString());
+        _ = await _keycloakUserClient.GetUserAsync(_keycloakOptions.Value.Realm, userId.ToString());
 
         var worker = new Worker(userId, workerId, name);
         await SetWorkerId(worker, workerId);
+        await OnDuty(worker);
         return worker;
     }
 
@@ -52,41 +52,25 @@ public class WorkerManager : DomainService
         worker.WorkerId = workerId;
     }
 
-    public async Task OnDuty(Guid userId)
+    public async Task OnDuty(Worker worker)
     {
-        await ModifyUserGroups(userId, groups =>
-        {
-            if (!groups.Contains(WorkerConsts.WorkerGroupName))
-            {
-                groups.Add(WorkerConsts.WorkerGroupName);
-            }
-        });
+        var userId = worker.UserId;
+        var groupId = (await _keycloakClient.GetGroupsAsync(_keycloakOptions.Value.Realm))
+            .Where(r => r.Name!.Contains(WorkerConsts.WorkerGroupName))
+            .Select(r => r.Id).Single();
+
+        await _keycloakClient.JoinGroupAsync(_keycloakOptions.Value.Realm, userId.ToString(), groupId!);
+        worker.IsOnDuty = true;
     }
 
-    public async Task OffDuty(Guid userId)
+    public async Task OffDuty(Worker worker)
     {
-        await ModifyUserGroups(userId, groups =>
-        {
-            if (groups.Contains(WorkerConsts.WorkerGroupName))
-            {
-                groups.Remove(WorkerConsts.WorkerGroupName);
-            }
-        });
-    }
+        var userId = worker.UserId;
+        var groupId = (await _keycloakClient.GetGroupsAsync(_keycloakOptions.Value.Realm))
+            .Where(r => r.Name!.Contains(WorkerConsts.WorkerGroupName))
+            .Select(r => r.Id).Single();
 
-    private async Task ModifyUserGroups(Guid userId, Action<List<string>> action)
-    {
-        var groups = (await _keycloakUserClient.GetUserGroups(_keycloakOptions.Value.Realm, userId.ToString()))
-            .Select(g => g.Name!).ToList();
-        var u = await _keycloakUserClient.GetUser(_keycloakOptions.Value.Realm, userId.ToString());
-
-        action(groups);
-
-        var user = new User()
-        {
-            Id = u.Id,
-            Groups = groups.ToArray()
-        };
-        await _keycloakUserClient.UpdateUser(_keycloakOptions.Value.Realm, userId.ToString(), user);
+        await _keycloakClient.LeaveGroupAsync(_keycloakOptions.Value.Realm, userId.ToString(), groupId!);
+        worker.IsOnDuty = false;
     }
 }

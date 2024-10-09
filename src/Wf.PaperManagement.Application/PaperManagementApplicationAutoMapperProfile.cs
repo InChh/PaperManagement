@@ -15,6 +15,6 @@ public class PaperManagementApplicationAutoMapperProfile : Profile
          * into multiple profile classes for a better organization. */
         CreateMap<Paper, PaperDto>();
         CreateMap<Worker, WorkerDto>();
-        CreateMap<User, UserDto>();
+        CreateMap<UserRepresentation, UserDto>();
     }
 }

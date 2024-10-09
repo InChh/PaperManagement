@@ -38,7 +38,7 @@ public class StatisticAppService : PaperManagementAppService, IStatisticAppServi
             .Select(g => new WorkerResolveCountDto()
             {
                 WorkerId = g.Key!.Value,
-                WorkerName = g.First().Name,
+                WorkerName = g.First().Worker!.Name,
                 ResolveCount = g.Count()
             });
         var worker2Papers = queryable.GroupBy(p => p.Worker2Id)
@@ -46,7 +46,7 @@ public class StatisticAppService : PaperManagementAppService, IStatisticAppServi
             .Select(g => new WorkerResolveCountDto()
             {
                 WorkerId = g.Key!.Value,
-                WorkerName = g.First().Name,
+                WorkerName = g.First().Worker2!.Name,
                 ResolveCount = g.Count()
             });
 

@@ -12,6 +12,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Wf.PaperManagement.EntityFrameworkCore;
 using Keycloak.AuthServices.Authentication;
+using Keycloak.AuthServices.Common;
+using Keycloak.AuthServices.Sdk;
 using Keycloak.AuthServices.Sdk.Admin;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Mvc;
@@ -25,6 +27,7 @@ using Volo.Abp.AspNetCore.Serilog;
 using Volo.Abp.Autofac;
 using Volo.Abp.Caching;
 using Volo.Abp.Caching.StackExchangeRedis;
+using Volo.Abp.Data;
 using Volo.Abp.DistributedLocking;
 using Volo.Abp.Modularity;
 using Volo.Abp.Swashbuckle;
@@ -53,16 +56,18 @@ public class PaperManagementHttpApiHostModule : AbpModule
         ConfigureConventionalControllers();
         ConfigureAuthentication(context, configuration);
         ConfigureAuthorization(context, configuration);
-        ConfigureKeycloak(context, configuration);
         ConfigureCache(configuration);
         ConfigureVirtualFileSystem(context);
         ConfigureDataProtection(context, configuration, hostingEnvironment);
         ConfigureDistributedLocking(context, configuration);
+        ConfigureKeycloak(context, configuration);
         ConfigureCors(context, configuration);
         ConfigureSwaggerServices(context, configuration);
         ConfigureAntiForgery(hostingEnvironment);
-
-        context.Services.AddControllers(options => { options.Filters.Add<RefitExceptionHandlerFilter>(); });
+        Configure<AbpDataFilterOptions>(options =>
+        {
+            options.DefaultStates[typeof(ISoftDelete)] = new DataFilterState(isEnabled: true);
+        });
     }
 
     private void ConfigureAntiForgery(IHostEnvironment hostingEnvironment)
@@ -80,7 +85,20 @@ public class PaperManagementHttpApiHostModule : AbpModule
     private void ConfigureKeycloak(ServiceConfigurationContext context, IConfiguration configuration)
     {
         Configure<KeycloakAdminClientOptions>(configuration.GetSection("Keycloak:Admin"));
-        context.Services.AddKeycloakAdminHttpClient(configuration, null, "Keycloak:Admin");
+        var options = configuration.GetKeycloakOptions<KeycloakAdminClientOptions>("Keycloak:Admin")!;
+        const string clientName = "keycloakAdminClient";
+        context.Services.AddClientCredentialsTokenManagement()
+            .AddClient(
+                clientName,
+                client =>
+                {
+                    client.ClientId = options.Resource;
+                    client.ClientSecret = options.Credentials.Secret;
+                    client.TokenEndpoint = options.KeycloakTokenEndpoint;
+                });
+
+        context.Services.AddKeycloakAdminHttpClient(configuration, null, "Keycloak:Admin")
+            .AddClientCredentialsTokenHandler(clientName);
     }
 
     private void ConfigureCache(IConfiguration configuration)

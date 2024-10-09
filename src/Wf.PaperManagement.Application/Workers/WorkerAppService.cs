@@ -81,6 +81,7 @@ public class WorkerAppService : PaperManagementAppService, IWorkerAppService
     public async Task<WorkerDto> DeleteByWorkerIdAsync(int workerId)
     {
         var worker = await _workerRepository.GetByWorkerId(workerId);
+        await _workerManager.OffDuty(worker);
         await _workerRepository.DeleteAsync(worker);
         return ObjectMapper.Map<Worker, WorkerDto>(worker);
     }
@@ -89,17 +90,22 @@ public class WorkerAppService : PaperManagementAppService, IWorkerAppService
     public async Task<WorkerDto> DeleteByUserIdAsync(Guid userId)
     {
         var worker = await _workerRepository.GetByUserId(userId);
+        await _workerManager.OffDuty(worker);
         await _workerRepository.DeleteAsync(worker);
         return ObjectMapper.Map<Worker, WorkerDto>(worker);
     }
 
+    [Authorize(Roles = "leader")]
     public async Task OnDutyAsync(Guid userId)
     {
-        await _workerManager.OnDuty(userId);
+        var worker = await _workerRepository.GetByUserId(userId);
+        await _workerManager.OnDuty(worker);
     }
 
+    [Authorize(Roles = "leader")]
     public async Task OffDutyAsync(Guid userId)
     {
-        await _workerManager.OffDuty(userId);
+        var worker = await _workerRepository.GetByUserId(userId);
+        await _workerManager.OffDuty(worker);
     }
 }

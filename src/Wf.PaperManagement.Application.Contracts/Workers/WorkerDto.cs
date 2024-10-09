@@ -8,4 +8,5 @@ public class WorkerDto : FullAuditedEntityDto
     public Guid UserId { get; set; }
     public int WorkerId { get; set; }
     public string Name { get; set; } = null!;
+    public bool IsOnDuty { get; set; }
 }

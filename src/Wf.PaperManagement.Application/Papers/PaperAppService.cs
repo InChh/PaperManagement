@@ -130,7 +130,7 @@ public class PaperAppService : PaperManagementAppService, IPaperAppService
     /// </summary>
     /// <param name="id"></param>
     /// <returns></returns>
-    [Authorize(Roles = "admin")]
+    [Authorize(Roles = "leader")]
     public async Task<PaperDto> DeleteAsync(Guid id)
     {
         var paper = await _paperRepository.GetAsync(id);

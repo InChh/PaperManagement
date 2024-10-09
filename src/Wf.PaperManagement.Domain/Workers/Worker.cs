@@ -9,7 +9,7 @@ public class Worker : FullAuditedEntity
     /// <summary>
     /// 姓名
     /// </summary>
-    public string Name { get; private set; }
+    public string Name { get; private set; } = null!;
 
     /// <summary>
     /// 工号
@@ -17,6 +17,8 @@ public class Worker : FullAuditedEntity
     public int WorkerId { get; set; }
 
     public Guid UserId { get; set; }
+
+    public bool IsOnDuty { get; set; }
 
     protected Worker()
     {
@@ -27,6 +29,7 @@ public class Worker : FullAuditedEntity
         UserId = userId;
         WorkerId = workerId;
         Name = name;
+        IsOnDuty = true;
     }
 
     public void SetName(string name)
