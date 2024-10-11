@@ -27,6 +27,22 @@ public class StatisticAppService : PaperManagementAppService, IStatisticAppServi
         return count;
     }
 
+    public async Task<int> GetTotalResolveCountAsync()
+    {
+        var queryable = await _paperRepository.GetQueryableAsync();
+        queryable = queryable.Where(p => p.Status == PaperStatus.Processed);
+        var count = await AsyncExecuter.CountAsync(queryable);
+        return count;
+    }
+
+    public async Task<int> GetMonthlyResolveCountAsync()
+    {
+        var queryable = await _paperRepository.GetQueryableAsync();
+        queryable = queryable.Where(p => p.CreationTime.Month == DateTime.Now.Month && p.Status == PaperStatus.Processed);
+        var count = await AsyncExecuter.CountAsync(queryable);
+        return count;
+    }
+
     public async Task<PagedResultDto<WorkerResolveCountDto>> GetWorkerResolveCountAsync(GetWorkerResolveCountDto input)
     {
         var queryable = await _paperRepository.GetQueryableAsync();
