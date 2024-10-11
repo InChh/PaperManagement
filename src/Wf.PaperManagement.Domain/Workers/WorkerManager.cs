@@ -35,7 +35,7 @@ public class WorkerManager : DomainService
         // 检查用户是否存在
         _ = await _keycloakUserClient.GetUserAsync(_keycloakOptions.Value.Realm, userId.ToString());
 
-        var worker = new Worker(userId, workerId, name);
+        var worker = new Worker(userId, workerId, name,true);
         await SetWorkerId(worker, workerId);
         await OnDuty(worker);
         return worker;

@@ -49,7 +49,7 @@ public class PaperManagementDataSeedContributor : IDataSeedContributor, ITransie
         var workers = new List<Worker>();
         for (var i = 1; i <= 50; i++)
         {
-            var worker = new Worker(_guidGenerator.Create(), 400 + i, $"队员{i}");
+            var worker = new Worker(_guidGenerator.Create(), 400 + i, $"队员{i}",true);
             workers.Add(worker);
         }
 

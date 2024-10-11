@@ -100,6 +100,7 @@ public class WorkerAppService : PaperManagementAppService, IWorkerAppService
     {
         var worker = await _workerRepository.GetByUserId(userId);
         await _workerManager.OnDuty(worker);
+        await _workerRepository.UpdateAsync(worker);
     }
 
     [Authorize(Roles = "leader")]
@@ -107,5 +108,6 @@ public class WorkerAppService : PaperManagementAppService, IWorkerAppService
     {
         var worker = await _workerRepository.GetByUserId(userId);
         await _workerManager.OffDuty(worker);
+        await _workerRepository.UpdateAsync(worker);
     }
 }

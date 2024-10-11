@@ -24,12 +24,12 @@ public class Worker : FullAuditedEntity
     {
     }
 
-    public Worker(Guid userId, int workerId, string name)
+    public Worker(Guid userId, int workerId, string name, bool isOnDuty)
     {
         UserId = userId;
         WorkerId = workerId;
         Name = name;
-        IsOnDuty = true;
+        IsOnDuty = isOnDuty;
     }
 
     public void SetName(string name)
