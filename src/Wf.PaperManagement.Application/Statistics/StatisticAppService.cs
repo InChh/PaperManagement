@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Threading.Tasks;
@@ -38,9 +39,25 @@ public class StatisticAppService : PaperManagementAppService, IStatisticAppServi
     public async Task<int> GetMonthlyResolveCountAsync()
     {
         var queryable = await _paperRepository.GetQueryableAsync();
-        queryable = queryable.Where(p => p.CreationTime.Month == DateTime.Now.Month && p.Status == PaperStatus.Processed);
+        queryable = queryable.Where(
+            p => p.CreationTime.Month == DateTime.Now.Month && p.Status == PaperStatus.Processed);
         var count = await AsyncExecuter.CountAsync(queryable);
         return count;
+    }
+
+    public async Task<List<DailyResolveCountDto>> GetMonthlyResolveDetailAsync()
+    {
+        var queryable = await _paperRepository.GetQueryableAsync();
+        var dailyResolveCountDtos = queryable
+            .Where(p => p.CreationTime.Month == DateTime.Now.Month && p.Status == PaperStatus.Processed)
+            .GroupBy(p => p.CreationTime.Date)
+            .Select(g => new DailyResolveCountDto()
+            {
+                Date = g.Key,
+                ResolveCount = g.Count()
+            })
+            .ToList();
+        return dailyResolveCountDtos;
     }
 
     public async Task<PagedResultDto<WorkerResolveCountDto>> GetWorkerResolveCountAsync(GetWorkerResolveCountDto input)

@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Wf.PaperManagement.Common;
 using Volo.Abp.Application.Dtos;
@@ -24,6 +25,8 @@ public interface IStatisticAppService : IApplicationService
     /// </summary>
     /// <returns>处理单数</returns>
     Task<int> GetMonthlyResolveCountAsync();
+
+    Task<List<DailyResolveCountDto>> GetMonthlyResolveDetailAsync();
 
     /// <summary>
     /// 获取队员在指定时间范围内的出单数量
