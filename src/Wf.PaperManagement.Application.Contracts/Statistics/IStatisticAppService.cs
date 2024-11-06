@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Wf.PaperManagement.Common;
@@ -26,7 +27,7 @@ public interface IStatisticAppService : IApplicationService
     /// <returns>处理单数</returns>
     Task<int> GetMonthlyResolveCountAsync();
 
-    Task<List<DailyResolveCountDto>> GetMonthlyResolveDetailAsync();
+    Task<List<DailyResolveCountDto>> GetMonthlyResolveDetailAsync(int year, int month);
 
     /// <summary>
     /// 获取队员在指定时间范围内的出单数量

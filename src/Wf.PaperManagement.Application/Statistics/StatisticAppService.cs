@@ -5,6 +5,7 @@ using System.Linq.Dynamic.Core;
 using System.Threading.Tasks;
 using Wf.PaperManagement.Papers;
 using Microsoft.AspNetCore.Authorization;
+using Volo.Abp;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.Domain.Repositories;
 
@@ -45,12 +46,24 @@ public class StatisticAppService : PaperManagementAppService, IStatisticAppServi
         return count;
     }
 
-    public async Task<List<DailyResolveCountDto>> GetMonthlyResolveDetailAsync()
+    public async Task<List<DailyResolveCountDto>> GetMonthlyResolveDetailAsync(int year, int month)
     {
+        if (year < 0)
+        {
+            throw new BusinessException(null, "年份不能为负");
+        }
+
+        if (month is < 1 or > 12)
+        {
+            throw new BusinessException(null, "月份必须在1-12之间");
+        }
+
         var queryable = await _paperRepository.GetQueryableAsync();
         var dailyResolveCountDtos = queryable
-            .Where(p => p.CreationTime.Month == DateTime.Now.Month && p.Status == PaperStatus.Processed)
-            .GroupBy(p => p.CreationTime.Date)
+            .Where(p => p.CompleteTime != null)
+            .Where(p => p.CompleteTime!.Value.Year == year && p.CompleteTime!.Value.Month == month &&
+                        p.Status == PaperStatus.Processed)
+            .GroupBy(p => p.CompleteTime!.Value.Date)
             .Select(g => new DailyResolveCountDto()
             {
                 Date = g.Key,
@@ -62,9 +75,15 @@ public class StatisticAppService : PaperManagementAppService, IStatisticAppServi
 
     public async Task<PagedResultDto<WorkerResolveCountDto>> GetWorkerResolveCountAsync(GetWorkerResolveCountDto input)
     {
+        var start = new TimeSpan(0, 0, 0);
+        var startTime = input.StartTime.Date + start;
+        var end = new TimeSpan(23, 59, 59);
+        var endTime = input.EndTime.Date + end;
         var queryable = await _paperRepository.GetQueryableAsync();
-        queryable = queryable.Where(p =>
-            p.Status == PaperStatus.Processed && p.CompleteTime >= input.StartTime && p.CompleteTime <= input.EndTime);
+        queryable = queryable
+            .Where(p => p.CompleteTime != null)
+            .Where(p =>
+                p.Status == PaperStatus.Processed && p.CompleteTime! >= startTime && p.CompleteTime! <= endTime);
 
         var worker1Papers = queryable.GroupBy(p => p.WorkerId)
             .Where(p => p.Key != null)
