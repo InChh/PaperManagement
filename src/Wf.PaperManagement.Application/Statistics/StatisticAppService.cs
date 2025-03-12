@@ -85,16 +85,19 @@ public class StatisticAppService : PaperManagementAppService, IStatisticAppServi
             .Where(p =>
                 p.Status == PaperStatus.Processed && p.CompleteTime! >= startTime && p.CompleteTime! <= endTime);
 
-        var worker1Papers = queryable.GroupBy(p => p.WorkerId)
-            .Where(p => p.Key != null)
+
+        var worker1Papers = queryable
+            .Where(p => p.WorkerId.HasValue)
+            .GroupBy(p => p.WorkerId)
             .Select(g => new WorkerResolveCountDto()
             {
                 WorkerId = g.Key!.Value,
                 WorkerName = g.First().Worker!.Name,
                 ResolveCount = g.Count()
             });
-        var worker2Papers = queryable.GroupBy(p => p.Worker2Id)
-            .Where(p => p.Key != null)
+        var worker2Papers = queryable
+            .Where(p => p.Worker2Id.HasValue)
+            .GroupBy(p => p.Worker2Id)
             .Select(g => new WorkerResolveCountDto()
             {
                 WorkerId = g.Key!.Value,
@@ -102,7 +105,7 @@ public class StatisticAppService : PaperManagementAppService, IStatisticAppServi
                 ResolveCount = g.Count()
             });
 
-        var resultQueryable = worker1Papers.Union(worker2Papers)
+        var resultQueryable = worker1Papers.Concat(worker2Papers)
             .GroupBy(p => p.WorkerId)
             .Select(g => new WorkerResolveCountDto()
             {
