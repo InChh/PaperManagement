@@ -127,6 +127,8 @@ public class PaperAppService : PaperManagementAppService, IPaperAppService
         paper.SetCompleteTime(input.CompleteTime);
         paper.Solution = input.Solution;
         paper.Note = input.Note;
+        paper.Status = input.Status;
+        paper.ReceiveTime = input.ReceiveTime;
         await _paperManager.SetReceiverAsync(paper, input.ReceiverId);
         await _paperManager.SetWorkerAsync(paper, input.WorkerId);
         await _paperManager.SetWorker2Async(paper, input.Worker2Id);
