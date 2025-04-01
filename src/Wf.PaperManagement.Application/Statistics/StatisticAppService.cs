@@ -24,7 +24,9 @@ public class StatisticAppService : PaperManagementAppService, IStatisticAppServi
     public async Task<int> GetTodayResolveCountAsync()
     {
         var queryable = await _paperRepository.GetQueryableAsync();
-        queryable = queryable.Where(p => p.CreationTime.Date == DateTime.Now.Date && p.Status == PaperStatus.Processed);
+        queryable = queryable.Where(p =>
+            p.CreationTime.Date == DateTime.Now.Date && p.CreationTime.Month == DateTime.Now.Month &&
+            p.CreationTime.Year == DateTime.Now.Year && p.Status == PaperStatus.Processed);
         var count = await AsyncExecuter.CountAsync(queryable);
         return count;
     }
@@ -41,7 +43,8 @@ public class StatisticAppService : PaperManagementAppService, IStatisticAppServi
     {
         var queryable = await _paperRepository.GetQueryableAsync();
         queryable = queryable.Where(
-            p => p.CreationTime.Month == DateTime.Now.Month && p.Status == PaperStatus.Processed);
+            p => p.CreationTime.Month == DateTime.Now.Month && p.CreationTime.Year == DateTime.Now.Year &&
+                 p.Status == PaperStatus.Processed);
         var count = await AsyncExecuter.CountAsync(queryable);
         return count;
     }
